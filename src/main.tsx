@@ -6,26 +6,18 @@ import { StrictMode } from "react";
 import {
   Outlet,
   RouterProvider,
-  Link,
   createRouter,
   createRoute,
   createRootRoute,
 } from "@tanstack/react-router";
 import { EnterPassword as EnterPassword } from "./routes/EnterPassword";
 import { Home } from "./pages/Home/Home";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./ui/theme";
 
 const rootRoute = createRootRoute({
   component: () => (
     <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{" "}
-        <Link to="/password" className="[&.active]:font-bold">
-          Enter password
-        </Link>
-      </div>
-      <hr />
       <Outlet />
     </>
   ),
@@ -34,7 +26,7 @@ const rootRoute = createRootRoute({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: () => <Home name="rory/" />,
+  component: () => <Home name="rory" />,
 });
 
 const enterPasswordRoute = createRoute({
@@ -57,6 +49,8 @@ const rootElement = document.getElementById("root")!;
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 );
