@@ -13,10 +13,16 @@ export interface UserLift extends LiftRecord {
 }
 
 export type LiftTargetBase = {
+  liftName: LiftNames;
+  targetId: string;
   targetWeight: LiftWeight;
   targetDate?: Date;
   createdAt: Date;
 };
+
+export interface UserLiftTarget extends LiftTargetBase {
+  userId: string;
+}
 
 export interface LiftTargetTracker extends LiftTargetBase {
   currentWeight: LiftWeight;
