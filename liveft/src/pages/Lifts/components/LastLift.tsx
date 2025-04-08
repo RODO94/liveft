@@ -1,5 +1,3 @@
-import "./LastLift.scss";
-
 export default function LastLift() {
   /**
    * This component needs to have a date tracker
