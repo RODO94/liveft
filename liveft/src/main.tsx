@@ -11,9 +11,8 @@ import {
   createRoute,
   createRootRoute,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { EnterPassword as EnterPassword } from "./routes/EnterPassword";
-import { Index } from "./routes";
+import { Home } from "./pages/Home/Home";
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -28,7 +27,6 @@ const rootRoute = createRootRoute({
       </div>
       <hr />
       <Outlet />
-      <TanStackRouterDevtools />
     </>
   ),
 });
@@ -36,7 +34,7 @@ const rootRoute = createRootRoute({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Index,
+  component: () => <Home name="rory/" />,
 });
 
 const enterPasswordRoute = createRoute({
