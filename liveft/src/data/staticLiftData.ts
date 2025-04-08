@@ -16,7 +16,7 @@ const roryLifts: UserLift[] = [
     userId: "rory",
   },
   {
-    name: "clean + jerk",
+    name: "snatch",
     weight: "120 kg",
     date: new Date("2023-10-01"),
     id: "rory1",
