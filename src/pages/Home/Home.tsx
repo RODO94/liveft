@@ -1,13 +1,21 @@
+import Box from "@mui/material/Box";
 import Header from "./components/Header";
 
 import { LiftsSection } from "./components/LiftsSection";
-import Container from "@mui/material/Container";
 
 export const Home = ({ name }: { name: string }) => {
   return (
-    <Container maxWidth="md" sx={{ height: "100%", width: "100%" }}>
-      <Header name={name} />
-      <LiftsSection />
-    </Container>
+    <main
+      style={{
+        background:
+          "var(--primary--gradient, linear-gradient(180deg, #BE3455 0%, #0C0C0C 100%))",
+        minHeight: "100vh",
+      }}
+    >
+      <Box display={"flex"} flexDirection={"column"} px={2} py={2} gap={6}>
+        <Header name={name} />
+        <LiftsSection />
+      </Box>
+    </main>
   );
 };

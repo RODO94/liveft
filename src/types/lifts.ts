@@ -2,7 +2,7 @@ export type LiftNames = "clean + jerk" | "snatch" | "squat" | "deadlift";
 export type LiftWeight = `${number} kg`;
 export type LiftRecord = {
   name: LiftNames;
-  weight: LiftWeight;
+  weight: number;
   date: Date;
   id: string;
   reps?: `${number} reps`;
@@ -15,7 +15,7 @@ export interface UserLift extends LiftRecord {
 export type LiftTargetBase = {
   liftName: LiftNames;
   targetId: string;
-  targetWeight: LiftWeight;
+  targetWeight: number;
   targetDate?: Date;
   createdAt: Date;
 };
@@ -25,7 +25,7 @@ export interface UserLiftTarget extends LiftTargetBase {
 }
 
 export interface LiftTargetTracker extends LiftTargetBase {
-  currentWeight: LiftWeight;
+  currentWeight: number;
   daysLeft: `${number} days`;
   progress: `${number}%`;
 }
