@@ -39,7 +39,7 @@ export const LiftsSection = () => {
           >
             ...see more
           </ColorButton>
-          <ColorButton fullWidth>+ Add lift</ColorButton>
+          <ColorButton fullWidth>+ add lift</ColorButton>
         </Box>
       </Box>
     </Box>
