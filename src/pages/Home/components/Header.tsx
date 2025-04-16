@@ -5,7 +5,13 @@ import BlurCircularIcon from "@mui/icons-material/BlurCircular";
 
 export default function Header({ name }: { name: string }) {
   return (
-    <Box component={"header"} pt={1}>
+    <Box
+      component={"header"}
+      pt={2}
+      display={"flex"}
+      flexDirection={"column"}
+      gap={1}
+    >
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Logo />
       </Box>
@@ -16,8 +22,8 @@ export default function Header({ name }: { name: string }) {
         alignItems={"center"}
       >
         <Box display={"flex"} flexDirection={"column"} gap={0.5}>
-          <Typography component={"h2"}>{`Hi, ${name}`}</Typography>
-          <Typography component={"h3"}>Live your lift, baby</Typography>
+          <Typography variant="h2">{`Hi, ${name}`}</Typography>
+          <Typography variant="body2">Live your lift, baby</Typography>
         </Box>
         <BlurCircularIcon />
       </Box>

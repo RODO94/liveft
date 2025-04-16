@@ -26,4 +26,18 @@ export const theme = createTheme({
       secondary: "#282828",
     },
   },
+  typography: {
+    h2: {
+      fontSize: "1.25rem",
+      fontWeight: 400,
+    },
+    h3: {
+      fontSize: "1.25rem",
+      fontWeight: 400,
+    },
+    body2: {
+      fontSize: "0.75rem",
+      fontWeight: 500,
+    },
+  },
 });
