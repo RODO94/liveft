@@ -1,15 +1,14 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import Logo from "../../../ui/components/Logo";
 import BlurCircularIcon from "@mui/icons-material/BlurCircular";
 
 export default function Header({ name }: { name: string }) {
   return (
-    <header>
-      <Container>
+    <Box component={"header"} pt={1}>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Logo />
-      </Container>
+      </Box>
       <Box
         display={"flex"}
         flexDirection={"row"}
@@ -22,6 +21,6 @@ export default function Header({ name }: { name: string }) {
         </Box>
         <BlurCircularIcon />
       </Box>
-    </header>
+    </Box>
   );
 }

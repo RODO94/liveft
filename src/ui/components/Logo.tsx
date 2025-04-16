@@ -1,18 +1,19 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import LogoTitle from "./LogoTitle";
 
 export default function Logo() {
   return (
-    <Box component={"header"} display={"flex"} flexDirection={"column"} gap={0}>
-      <Typography component={"h1"} sx={{ alignSelf: "flex-start" }}>
-        Li
-      </Typography>
-      <Typography component={"h1"} sx={{ alignSelf: "center" }}>
-        _ve
-      </Typography>
-      <Typography component={"h1"} sx={{ alignSelf: "flex-end" }}>
-        _ft
-      </Typography>
+    <Box
+      component={"header"}
+      display={"flex"}
+      flexDirection={"row"}
+      alignItems={"center"}
+      width={"fit-content"}
+      gap={0}
+    >
+      <LogoTitle title="Li" position="flex-start" />
+      <LogoTitle title="_ve" position="center" />
+      <LogoTitle title="_ft" position="flex-end" />
     </Box>
   );
 }

@@ -26,7 +26,7 @@ const rootRoute = createRootRoute({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: () => <Home name="rory" />,
+  component: () => <Home name="Rory" />,
 });
 
 const enterPasswordRoute = createRoute({
