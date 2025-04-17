@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Header from "./components/Header";
 
 import { LiftsSection } from "./components/LiftsSection";
+import Progress from "./components/Progress/Progress";
 
 export const Home = ({ name }: { name: string }) => {
   return (
@@ -15,6 +16,7 @@ export const Home = ({ name }: { name: string }) => {
       <Box display={"flex"} flexDirection={"column"} px={2} py={2} gap={6}>
         <Header name={name} />
         <LiftsSection />
+        <Progress />
       </Box>
     </main>
   );
