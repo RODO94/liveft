@@ -3,15 +3,13 @@ import Typography from "@mui/material/Typography";
 import { UserLift } from "../../../types/lifts";
 import { theme } from "../../../ui/theme";
 import { capitalize } from "@mui/material/utils";
-import { useMemo } from "react";
+import { memo } from "react";
 
 interface LiftRecordProps {
   lifts: UserLift[];
 }
-export const LiftRecord = ({ lifts }: LiftRecordProps) => {
-  const heaviestLift = useMemo(() => {
-    return lifts.sort((a, b) => b.weight - a.weight)[0];
-  }, [lifts]);
+const LiftRecord = ({ lifts }: LiftRecordProps) => {
+  const heaviestLift = lifts.sort((a, b) => b.weight - a.weight)[0];
   return (
     <Box
       display={"flex"}
@@ -34,3 +32,5 @@ export const LiftRecord = ({ lifts }: LiftRecordProps) => {
     </Box>
   );
 };
+
+export const MemoizedLiftRecord = memo(LiftRecord);

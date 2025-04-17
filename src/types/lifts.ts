@@ -1,23 +1,24 @@
-export type LiftNames = "clean + jerk" | "snatch" | "squat" | "deadlift";
-export type LiftWeight = `${number} kg`;
+export type LiftNames = string;
 export type LiftRecord = {
   name: LiftNames;
   weight: number;
-  date: Date;
+  date: string;
   id: string;
-  reps?: `${number} reps`;
+  reps?: number;
 };
 
 export interface UserLift extends LiftRecord {
   userId: string;
 }
 
+export type AllUserLifts = Record<LiftNames, UserLift[]>;
+
 export type LiftTargetBase = {
-  liftName: LiftNames;
+  liftName: LiftNames | (string & {});
   targetId: string;
   targetWeight: number;
-  targetDate?: Date;
-  createdAt: Date;
+  targetDate?: string;
+  createdAt: string;
 };
 
 export interface UserLiftTarget extends LiftTargetBase {
