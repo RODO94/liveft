@@ -16,6 +16,7 @@ export type LiftInformationState = Pick<UserLift, "name" | "weight" | "reps">;
 const emptyLiftInformation: LiftInformationState = {
   name: "",
   weight: 0,
+  reps: 0,
 };
 
 export default function AddLiftModal({
@@ -42,13 +43,9 @@ export default function AddLiftModal({
 
     const lowercaseLiftName = name.toLowerCase();
 
-    const liftWeightNumber = Number(weight);
-
-    if (!liftWeightNumber) return;
-
     const newLiftToAdd: UserLift = {
       name: lowercaseLiftName,
-      weight: liftWeightNumber,
+      weight: weight,
       date: new Date().toLocaleDateString("en-GB"),
       id: crypto.randomUUID(),
       userId: "rory",
@@ -57,6 +54,12 @@ export default function AddLiftModal({
 
     if (!lifts) {
       setLifts({ [lowercaseLiftName]: [newLiftToAdd] });
+      resetAndCloseDialog();
+      return;
+    }
+
+    if (!lifts[lowercaseLiftName]) {
+      setLifts({ ...lifts, [lowercaseLiftName]: [newLiftToAdd] });
       resetAndCloseDialog();
       return;
     }
@@ -110,11 +113,7 @@ export default function AddLiftModal({
             <StyledTextField
               aria-describedby="weight-label"
               autoFocus
-              value={
-                liftInformation?.weight === 0 || isNaN(liftInformation?.weight)
-                  ? ""
-                  : liftInformation?.weight
-              }
+              value={!liftInformation?.weight ? "" : liftInformation?.weight}
               onChange={(e) =>
                 setLiftInformation({
                   ...liftInformation,
@@ -138,7 +137,7 @@ export default function AddLiftModal({
             Number of reps
             <StyledTextField
               autoFocus
-              value={liftInformation?.reps}
+              value={!liftInformation?.reps ? "" : liftInformation?.reps}
               aria-describedby="reps-label"
               onChange={(e) =>
                 setLiftInformation({

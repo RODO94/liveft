@@ -46,8 +46,6 @@ export const roryLifts: AllUserLifts = {
       reps: 2,
     },
   ],
-  deadlift: [],
-  squat: [],
 };
 
 export const sallaLifts: AllUserLifts = {
