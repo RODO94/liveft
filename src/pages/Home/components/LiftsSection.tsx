@@ -4,18 +4,8 @@ import { AllUserLifts, LiftNames } from "../../../types/lifts";
 import { roryLifts } from "../../../data/staticLiftData";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
-import Button, { ButtonProps } from "@mui/material/Button";
-import { styled } from "@mui/material";
 import AddLiftModal from "./AddLiftModal/AddLiftModal";
-
-const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  backgroundColor: theme.palette.action.dormant,
-  color: theme.palette.text.primary,
-  textTransform: "none",
-  "&:hover": {
-    backgroundColor: theme.palette.action.active,
-  },
-}));
+import { ColouredButton } from "../../../ui/components/ColouredButton";
 
 export const LiftsSection = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -44,15 +34,15 @@ export const LiftsSection = () => {
             );
           })}
         <Box display={"flex"} gap={1} flexDirection="row" width="100%">
-          <ColorButton
+          <ColouredButton
             fullWidth
             onClick={() => setNumberOfLiftsShown(numberOfLiftsShown + 3)}
           >
             ...see more
-          </ColorButton>
-          <ColorButton fullWidth onClick={() => setOpenModal(true)}>
+          </ColouredButton>
+          <ColouredButton fullWidth onClick={() => setOpenModal(true)}>
             + add lift
-          </ColorButton>
+          </ColouredButton>
         </Box>
         <AddLiftModal
           open={openModal}
