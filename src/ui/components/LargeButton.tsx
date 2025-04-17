@@ -2,7 +2,13 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { theme } from "../theme";
 
-export default function LargeButton({ text }: { text: string }) {
+export default function LargeButton({
+  text,
+  handleClick,
+}: {
+  text: string;
+  handleClick?: () => void;
+}) {
   return (
     <Button
       sx={{
@@ -16,7 +22,7 @@ export default function LargeButton({ text }: { text: string }) {
         color: theme.palette.text.primary,
       }}
       fullWidth
-      onClick={() => {}}
+      onClick={handleClick}
       aria-label="Enter the app"
     >
       <Typography variant="h3">{text}</Typography>
