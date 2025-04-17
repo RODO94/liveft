@@ -1,56 +1,32 @@
 import "./index.css";
-
-import ReactDOM from "react-dom/client";
-
 import { StrictMode } from "react";
-import {
-  Outlet,
-  RouterProvider,
-  createRouter,
-  createRoute,
-  createRootRoute,
-} from "@tanstack/react-router";
-import { EnterPassword as EnterPassword } from "./routes/EnterPassword";
-import { Home } from "./pages/Home/Home";
+import ReactDOM from "react-dom/client";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+
+// Import the generated route tree
+import { routeTree } from "./routeTree.gen";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./ui/theme";
 
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-    </>
-  ),
-});
-
-const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: () => <Home name="Rory" />,
-});
-
-const enterPasswordRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/password",
-  component: EnterPassword,
-});
-
-const routeTree = rootRoute.addChildren([indexRoute, enterPasswordRoute]);
-
+// Create a new router instance
 const router = createRouter({ routeTree });
 
+// Register the router instance for type safety
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
 }
 
+// Render the app
 const rootElement = document.getElementById("root")!;
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <StrictMode>
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </StrictMode>
-);
+if (!rootElement.innerHTML) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <StrictMode>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </StrictMode>
+  );
+}

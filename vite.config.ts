@@ -5,7 +5,7 @@ import { defineConfig, UserConfig } from "vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
     TanStackRouterVite({ target: "react", autoCodeSplitting: true }),
+    react(),
   ],
 }) satisfies UserConfig;

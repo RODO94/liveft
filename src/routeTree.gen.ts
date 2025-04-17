@@ -11,21 +11,14 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
-import { Route as EnterPasswordImport } from './routes/EnterPassword'
+import { Route as HomeImport } from './routes/home'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const EnterPasswordRoute = EnterPasswordImport.update({
-  id: '/EnterPassword',
-  path: '/EnterPassword',
+const HomeRoute = HomeImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,18 +39,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/EnterPassword': {
-      id: '/EnterPassword'
-      path: '/EnterPassword'
-      fullPath: '/EnterPassword'
-      preLoaderRoute: typeof EnterPasswordImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeImport
       parentRoute: typeof rootRoute
     }
   }
@@ -67,42 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/EnterPassword': typeof EnterPasswordRoute
-  '/about': typeof AboutRoute
+  '/home': typeof HomeRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/EnterPassword': typeof EnterPasswordRoute
-  '/about': typeof AboutRoute
+  '/home': typeof HomeRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/EnterPassword': typeof EnterPasswordRoute
-  '/about': typeof AboutRoute
+  '/home': typeof HomeRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/EnterPassword' | '/about'
+  fullPaths: '/' | '/home'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/EnterPassword' | '/about'
-  id: '__root__' | '/' | '/EnterPassword' | '/about'
+  to: '/' | '/home'
+  id: '__root__' | '/' | '/home'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EnterPasswordRoute: typeof EnterPasswordRoute
-  AboutRoute: typeof AboutRoute
+  HomeRoute: typeof HomeRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EnterPasswordRoute: EnterPasswordRoute,
-  AboutRoute: AboutRoute,
+  HomeRoute: HomeRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,18 +97,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/EnterPassword",
-        "/about"
+        "/home"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/EnterPassword": {
-      "filePath": "EnterPassword.tsx"
-    },
-    "/about": {
-      "filePath": "about.tsx"
+    "/home": {
+      "filePath": "home.tsx"
     }
   }
 }
