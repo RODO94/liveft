@@ -1,8 +1,12 @@
 import { Box } from "@mui/material";
 import Logo from "../../ui/components/Logo";
 import EntranceActions from "./components/EntranceActions";
+import { useState } from "react";
 
 export default function Entrance() {
+  const [action, setAction] = useState<"enter" | "password" | "userSelect">(
+    "enter"
+  );
   return (
     <main
       style={{
@@ -20,7 +24,7 @@ export default function Entrance() {
         gap={15}
       >
         <Logo />
-        <EntranceActions />
+        <EntranceActions action={action} setAction={setAction} />
       </Box>
     </main>
   );

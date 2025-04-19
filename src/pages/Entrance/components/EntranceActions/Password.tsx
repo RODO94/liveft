@@ -1,8 +1,10 @@
-import { Box, InputLabel } from "@mui/material";
+import { Box, Button, InputLabel } from "@mui/material";
 import { StyledTextField } from "../../../../ui/components/StyledTextField";
 import { theme } from "../../../../ui/theme";
+import { EntranceActionComponent } from "./types";
 
-export default function Password() {
+export const Password: EntranceActionComponent = ({ action, setAction }) => {
+  if (action !== "password") return null;
   return (
     <Box display={"flex"} flexDirection="column" gap={2} width="100%">
       <InputLabel
@@ -24,6 +26,7 @@ export default function Password() {
           outline: "none",
         }}
       />
+      <Button variant="outlined" onClick={() => setAction("userSelect")} />
     </Box>
   );
-}
+};
