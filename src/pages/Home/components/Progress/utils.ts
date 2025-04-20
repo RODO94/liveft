@@ -74,6 +74,5 @@ export const responsiveBarData = (liftData: LiftRecord[]): BarDatum[] => {
       return { month: key, ...value };
     }
   );
-  console.log(barData);
   return barData;
 };

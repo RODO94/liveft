@@ -9,7 +9,7 @@ import { ColouredButton } from "../../../ui/components/ColouredButton";
 
 export const LiftsSection = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [numberOfLiftsShown, setNumberOfLiftsShown] = useState(3);
+  const [numberOfLiftsShown, setNumberOfLiftsShown] = useState(300);
   const [lifts, setLifts] = useState<LiftRecord[] | null>(null);
   const userId = window.sessionStorage.getItem("user");
 

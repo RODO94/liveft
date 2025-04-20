@@ -1,9 +1,10 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import { getLiftName, lifts } from "../../../../../data/staticLiftData";
+import { lifts } from "../../../../../data/staticLiftData";
 import { SetStateFunction } from "../../../../../types/utils";
 import { filterOptionsWithAdd } from "./utils";
 import { StyledTextField } from "../../../../../ui/components/StyledTextField";
 import { LiftInformationState } from "../AddLiftModal";
+import { Lift } from "../../../../../types/lifts";
 
 export default function LiftAutocomplete({
   value,
@@ -13,28 +14,34 @@ export default function LiftAutocomplete({
   setValue: SetStateFunction<LiftInformationState>;
 }) {
   return (
-    <Autocomplete
+    <Autocomplete<Lift, false, false, true, "div">
       fullWidth
       sx={{
         "& .MuiAutocomplete-inputRoot": {
           padding: "0px",
         },
       }}
-      value={value.liftId}
-      onChange={(_event, newValue) =>
-        setValue({ ...value, liftId: newValue || "" })
-      }
+      value={value.name}
+      onChange={(_event, newValue) => {
+        if (typeof newValue === "string")
+          return setValue({ ...value, id: newValue });
+        if (newValue) return setValue({ ...value, ...newValue });
+      }}
       filterOptions={filterOptionsWithAdd}
       selectOnFocus
       clearOnBlur
       handleHomeEndKeys
       id="lift-name"
-      options={lifts.map((lift) => lift.id)}
+      options={lifts}
+      getOptionLabel={(option) => {
+        if (typeof option === "object") return option.name;
+        return option;
+      }}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
         return (
           <li key={key} {...optionProps} style={{ color: "black" }}>
-            {getLiftName(option).name}
+            {option.name}
           </li>
         );
       }}

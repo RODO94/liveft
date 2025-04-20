@@ -41,8 +41,7 @@ export const getLiftName = (liftId: LiftRecord["liftId"]) => {
   if (targetLift)
     return { name: capitalize(targetLift.name), slug: targetLift.slug };
 
-  console.error("Lift cannot be found");
-  throw new Error("Lift cannot be found");
+  return { name: liftId, slug: liftId };
 };
 
 const [cleanAndJerk, , squat, deadlift, benchPress] = lifts;
