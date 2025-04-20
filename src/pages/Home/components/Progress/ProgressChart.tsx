@@ -2,26 +2,32 @@ import Box from "@mui/material/Box";
 import { BarDatum, ResponsiveBar } from "@nivo/bar";
 import { useEffect, useState } from "react";
 import { responsiveBarData } from "./utils";
-import { roryLifts } from "../../../../data/staticLiftData";
+import { liftRecordsTable, lifts } from "../../../../data/staticLiftData";
 
 export default function ProgressChart() {
-  const [lifts, setLifts] = useState<BarDatum[] | null>(null);
+  const [userLiftRecords, setUserLiftRecords] = useState<BarDatum[] | null>(
+    null
+  );
+  const userId = window.sessionStorage.getItem("user");
 
   useEffect(() => {
-    if (!lifts) {
-      setLifts(responsiveBarData(roryLifts));
+    if (!userLiftRecords) {
+      const userLiftRecords = liftRecordsTable.filter(
+        (lift) => lift.userId === userId
+      );
+      setUserLiftRecords(responsiveBarData(userLiftRecords));
     }
-  }, [lifts]);
+  }, [userLiftRecords, userId]);
 
-  if (lifts === null) return null;
+  if (userLiftRecords === null) return null;
 
   return (
     <Box minHeight={"100px"} minWidth={"100px"} height={"40vh"}>
       {
         <ResponsiveBar
-          data={lifts}
+          data={userLiftRecords}
           indexBy={"month"}
-          keys={Object.keys(roryLifts)}
+          keys={lifts.map((lift) => lift.slug)}
           margin={{ top: 10, right: 30, bottom: 50, left: 30 }}
           padding={0.5}
           innerPadding={0.5}

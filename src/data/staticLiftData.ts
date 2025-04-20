@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { Lift, LiftRecord } from "../types/lifts";
 import { userProfiles } from "./staticUserData";
+import { capitalize } from "@mui/material";
 
 /**
  * Lift data wise we need to alter how we do this, which may affect different bits
@@ -23,7 +24,7 @@ import { userProfiles } from "./staticUserData";
 
 const [salla, rory] = userProfiles;
 
-export const [cleanAndJerk, snatch, squat, deadlift, benchPress]: Lift[] = [
+export const lifts: Lift[] = [
   {
     id: "1",
     name: "clean + jerk",
@@ -34,6 +35,17 @@ export const [cleanAndJerk, snatch, squat, deadlift, benchPress]: Lift[] = [
   { id: "4", name: "deadlift", slug: "deadlift" },
   { id: "5", name: "bench press", slug: "bench-press" },
 ];
+
+export const getLiftName = (liftId: LiftRecord["liftId"]) => {
+  const targetLift = lifts.find((lift) => lift.id === liftId);
+  if (targetLift)
+    return { name: capitalize(targetLift.name), slug: targetLift.slug };
+
+  console.error("Lift cannot be found");
+  throw new Error("Lift cannot be found");
+};
+
+const [cleanAndJerk, , squat, deadlift, benchPress] = lifts;
 
 export const liftRecordsTable: LiftRecord[] = [
   {

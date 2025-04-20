@@ -6,15 +6,19 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import LiftAutocomplete from "./LiftInput/LiftAutocomplete";
-import { AllUserLifts, UserLift } from "../../../../types/lifts";
+import { LiftRecord } from "../../../../types/lifts";
 import { SetStateFunction } from "../../../../types/utils";
 import { StyledTextField } from "../../../../ui/components/StyledTextField";
 import InputLabel from "@mui/material/InputLabel";
+import { getLiftName } from "../../../../data/staticLiftData";
 
-export type LiftInformationState = Pick<UserLift, "name" | "weight" | "reps">;
+export type LiftInformationState = Pick<
+  LiftRecord,
+  "liftId" | "weight" | "reps"
+>;
 
 const emptyLiftInformation: LiftInformationState = {
-  name: "",
+  liftId: "",
   weight: 0,
   reps: 0,
 };
@@ -27,8 +31,8 @@ export default function AddLiftModal({
 }: {
   open: boolean;
   handleClose: SetStateFunction<boolean>;
-  lifts: AllUserLifts | null;
-  setLifts: SetStateFunction<AllUserLifts | null>;
+  lifts: LiftRecord[] | null;
+  setLifts: SetStateFunction<LiftRecord[] | null>;
 }) {
   const [liftInformation, setLiftInformation] =
     useState<LiftInformationState>(emptyLiftInformation);
@@ -37,39 +41,46 @@ export default function AddLiftModal({
     // TODO: Add error handling
     if (!liftInformation) return;
 
-    const { name, weight, reps } = liftInformation;
+    const { liftId, weight, reps } = liftInformation;
 
-    if (!name || !weight) return;
+    if (!liftId || !weight) return;
 
-    const lowercaseLiftName = name.toLowerCase();
+    const liftName = getLiftName(liftId).name;
 
-    const newLiftToAdd: UserLift = {
-      name: lowercaseLiftName,
+    if (!liftName) {
+      // add a new lift to the table
+    }
+
+    const lowercaseLiftName = liftName.toLowerCase();
+
+    const newLiftToAdd: LiftRecord = {
+      liftId: lowercaseLiftName,
       weight: weight,
       date: new Date().toLocaleDateString("en-GB"),
       id: crypto.randomUUID(),
       userId: "rory",
       reps: reps || undefined,
+      isMax: false,
     };
 
-    if (!lifts) {
-      setLifts({ [lowercaseLiftName]: [newLiftToAdd] });
-      resetAndCloseDialog();
-      return;
-    }
+    // if (!lifts) {
+    //   setLifts({ [lowercaseLiftName]: [newLiftToAdd] });
+    //   resetAndCloseDialog();
+    //   return;
+    // }
 
-    if (!lifts[lowercaseLiftName]) {
-      setLifts({ ...lifts, [lowercaseLiftName]: [newLiftToAdd] });
-      resetAndCloseDialog();
-      return;
-    }
+    // if (!lifts[lowercaseLiftName]) {
+    //   setLifts({ ...lifts, [lowercaseLiftName]: [newLiftToAdd] });
+    //   resetAndCloseDialog();
+    //   return;
+    // }
 
-    const newSetOfLifts: AllUserLifts = {
-      ...lifts,
-      [lowercaseLiftName]: [...lifts[lowercaseLiftName], newLiftToAdd],
-    };
+    // const newSetOfLifts: AllUserLifts = {
+    //   ...lifts,
+    //   [lowercaseLiftName]: [...lifts[lowercaseLiftName], newLiftToAdd],
+    // };
 
-    setLifts(newSetOfLifts);
+    // setLifts(newSetOfLifts);
     resetAndCloseDialog();
   };
 

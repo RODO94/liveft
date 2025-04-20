@@ -1,6 +1,7 @@
 import { BarDatum } from "@nivo/bar";
-import { AllUserLifts } from "../../../../types/lifts";
+import { LiftRecord } from "../../../../types/lifts";
 import dayjs from "dayjs";
+import { getLiftName } from "../../../../data/staticLiftData";
 
 export const monthsOfYear = [
   "Jan",
@@ -17,7 +18,7 @@ export const monthsOfYear = [
   "Dec",
 ];
 
-export const responsiveBarData = (liftData: AllUserLifts): BarDatum[] => {
+export const responsiveBarData = (liftData: LiftRecord[]): BarDatum[] => {
   /**
    * We need this to return an array
    * The array needs to be a collection of objects
@@ -27,19 +28,17 @@ export const responsiveBarData = (liftData: AllUserLifts): BarDatum[] => {
    * the value being the weight lifted in that month
    * Each lift should also get a colour attached to it
    */
-  const flatMap = Object.entries(liftData).flatMap(([, value]) => {
-    return value.map((lift) => {
-      return {
-        month: dayjs(lift.date, "YYYY/MM/DD").format("MMM"),
-        weight: lift.weight,
-        liftName: lift.name,
-      };
-    });
+  const liftsByMonth = liftData.map((lift) => {
+    return {
+      month: dayjs(lift.date, "YYYY/MM/DD").format("MMM"),
+      weight: lift.weight,
+      liftName: getLiftName(lift.liftId).slug,
+    };
   });
 
   let groupByMonth: Record<string, { [key: string]: number }> = {};
 
-  flatMap.forEach((lift) => {
+  liftsByMonth.forEach((lift) => {
     if (!groupByMonth) {
       groupByMonth = {
         [lift.month]: {
@@ -75,5 +74,6 @@ export const responsiveBarData = (liftData: AllUserLifts): BarDatum[] => {
       return { month: key, ...value };
     }
   );
+  console.log(barData);
   return barData;
 };

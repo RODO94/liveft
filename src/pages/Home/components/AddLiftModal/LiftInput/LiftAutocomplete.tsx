@@ -1,5 +1,5 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import { roryLifts } from "../../../../../data/staticLiftData";
+import { getLiftName, lifts } from "../../../../../data/staticLiftData";
 import { SetStateFunction } from "../../../../../types/utils";
 import { filterOptionsWithAdd } from "./utils";
 import { StyledTextField } from "../../../../../ui/components/StyledTextField";
@@ -20,21 +20,21 @@ export default function LiftAutocomplete({
           padding: "0px",
         },
       }}
-      value={value.name}
+      value={value.liftId}
       onChange={(_event, newValue) =>
-        setValue({ ...value, name: newValue || "" })
+        setValue({ ...value, liftId: newValue || "" })
       }
       filterOptions={filterOptionsWithAdd}
       selectOnFocus
       clearOnBlur
       handleHomeEndKeys
       id="lift-name"
-      options={Object.keys(roryLifts)}
+      options={lifts.map((lift) => lift.id)}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
         return (
           <li key={key} {...optionProps} style={{ color: "black" }}>
-            {option}
+            {getLiftName(option).name}
           </li>
         );
       }}

@@ -1,15 +1,14 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { UserLift } from "../../../types/lifts";
+import { type LiftRecord } from "../../../types/lifts";
 import { theme } from "../../../ui/theme";
-import { capitalize } from "@mui/material/utils";
 import { memo } from "react";
+import { getLiftName } from "../../../data/staticLiftData";
 
 interface LiftRecordProps {
-  lifts: UserLift[];
+  lift: LiftRecord;
 }
-const LiftRecord = ({ lifts }: LiftRecordProps) => {
-  const heaviestLift = lifts.sort((a, b) => b.weight - a.weight)[0];
+const LiftRecord = ({ lift }: LiftRecordProps) => {
   return (
     <Box
       display={"flex"}
@@ -19,7 +18,7 @@ const LiftRecord = ({ lifts }: LiftRecordProps) => {
       component={"article"}
       bgcolor={theme.palette.background.transparent}
     >
-      <Typography variant="body1">{capitalize(heaviestLift.name)}</Typography>
+      <Typography variant="body1">{getLiftName(lift.liftId).name}</Typography>
       <Box
         display={"flex"}
         alignItems="center"
@@ -27,7 +26,7 @@ const LiftRecord = ({ lifts }: LiftRecordProps) => {
         px={0.5}
         bgcolor={theme.palette.primary.dark}
       >
-        <Typography variant="body2">{`${heaviestLift.weight} kg`}</Typography>
+        <Typography variant="body2">{`${lift.weight} kg`}</Typography>
       </Box>
     </Box>
   );
