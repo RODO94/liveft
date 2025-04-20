@@ -1,20 +1,28 @@
-export type LiftNames = string;
-export type LiftRecord = {
-  name: LiftNames;
-  weight: number;
-  date: string;
-  id: string;
-  reps?: number;
-};
+import { UserBase } from "./users";
 
-export interface UserLift extends LiftRecord {
-  userId: string;
+export type LiftNames = string;
+
+export interface Lift {
+  id: string;
+  name: LiftNames;
+  slug: string;
+  // hasTarget?: boolean;
 }
 
-export type AllUserLifts = Record<LiftNames, UserLift[]>;
+export interface LiftRecord {
+  id: string;
+  liftId: Lift["id"];
+  weight: number;
+  date: string;
+  reps?: number;
+  userId: UserBase["id"];
+  isMax: boolean;
+}
+
+export type AllUserLifts = Record<LiftNames, LiftRecord[]>;
 
 export type LiftTargetBase = {
-  liftName: LiftNames | (string & {});
+  liftName: LiftNames;
   targetId: string;
   targetWeight: number;
   targetDate?: string;
