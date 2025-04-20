@@ -1,4 +1,4 @@
-import { FilterOptionsState } from "@mui/material";
+import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const filter = createFilterOptions<string>();

@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
 import LastLift from "./components/LastLift";
 import LiftTracker from "./components/LiftTracker";
 import WeightSlider from "./components/WeightSlider";

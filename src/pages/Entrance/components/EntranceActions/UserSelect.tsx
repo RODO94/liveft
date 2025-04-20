@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { userProfiles } from "../../../../data/staticUserData";
 import LargeButton from "../../../../ui/components/LargeButton";
 import { EntranceActionComponent } from "./types";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 export const UserSelect: EntranceActionComponent = ({ action }) => {
   const navigate = useNavigate();

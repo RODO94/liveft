@@ -9,7 +9,7 @@ import LiftAutocomplete from "./LiftInput/LiftAutocomplete";
 import { AllUserLifts, UserLift } from "../../../../types/lifts";
 import { SetStateFunction } from "../../../../types/utils";
 import { StyledTextField } from "../../../../ui/components/StyledTextField";
-import { InputLabel } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
 
 export type LiftInformationState = Pick<UserLift, "name" | "weight" | "reps">;
 
