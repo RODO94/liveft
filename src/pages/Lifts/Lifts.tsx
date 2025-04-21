@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LastLifts from "./components/LastLifts";
+import LastLifts from "./components/LastLifts/LastLifts";
 import LiftTracker from "./components/LiftTracker";
 import WeightSlider from "./components/WeightSlider";
 import { Link, useParams } from "@tanstack/react-router";
@@ -17,7 +17,7 @@ export default function Lifts() {
 
   useEffect(() => {
     const liftsByUserAndLift = liftRecordsTable.filter(
-      (lift) => lift.id === liftId && lift.userId === userId
+      (lift) => lift.liftId === liftId && lift.userId === userId
     );
     setLiftRecords(liftsByUserAndLift);
 

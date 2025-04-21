@@ -13,7 +13,7 @@ const LiftRecord = ({ lift }: LiftRecordProps) => {
   return (
     <Link
       to="/lift/$liftId"
-      params={{ liftId: lift.id }}
+      params={{ liftId: lift.liftId }}
       style={{ color: "white", cursor: "pointer", textDecoration: "none" }}
     >
       <Box
