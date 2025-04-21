@@ -14,8 +14,12 @@ export default function WeightSlider({
   );
 
   return (
-    <>
-      <Box display={"flex"} flex={"row"} gap={0} p={2}>
+    <Box p={2}>
+      <Box>
+        <Typography variant="h1">Weight</Typography>
+        <Typography variant="subtitle1">Set the percentage</Typography>
+      </Box>
+      <Box display={"flex"} flex={"row"} gap={0} py={2}>
         <Box
           flexGrow={1}
           textAlign={"center"}
@@ -38,7 +42,7 @@ export default function WeightSlider({
           <Typography>{`${calculatedWeight} kg`}</Typography>
         </Box>
       </Box>
-      <Box px={4}>
+      <Box>
         <Slider
           value={percentage}
           min={0}
@@ -48,6 +52,6 @@ export default function WeightSlider({
           sx={{ color: theme.palette.primary.light }}
         />
       </Box>
-    </>
+    </Box>
   );
 }
