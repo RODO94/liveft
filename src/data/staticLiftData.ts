@@ -3,25 +3,6 @@ import { Lift, LiftRecord } from "../types/lifts";
 import { userProfiles } from "./staticUserData";
 import { capitalize } from "@mui/material";
 
-/**
- * Lift data wise we need to alter how we do this, which may affect different bits
- * The records we have now use a string key of the lift name, but
- * this duplicates the [lift].name field and
- * it doesn't give us something unique to refer to
- *
- * Why do we need something unique?
- * The current route is using liftId as the main query param
- * But this doesn't actually exist because the lift name is the query param
- * Because I can separate out the objects in this form as if each
- * user has it's own DB table, I fear this is too simplistic and not
- * really intuitive from a full stack point of view because
- * its not a relational data structure, I would more likely want
- * to refer to a table of lifts, liftRecords, then a table of users
- * Each lift then gets a unique ID, a liftID, and a userID which we can use
- * to connect them
- *
- */
-
 const [salla, rory] = userProfiles;
 
 export const lifts: Lift[] = [

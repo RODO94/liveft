@@ -22,7 +22,7 @@ export interface LiftRecord {
 export type AllUserLifts = Record<LiftNames, LiftRecord[]>;
 
 export type LiftTargetBase = {
-  liftName: LiftNames;
+  liftId: Lift["id"];
   targetId: string;
   targetWeight: number;
   targetDate?: string;

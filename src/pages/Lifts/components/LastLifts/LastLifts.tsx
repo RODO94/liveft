@@ -19,8 +19,8 @@ export default function LastLifts({ lifts }: { lifts: LiftRecord[] | null }) {
         <Typography variant="subtitle1">Most recent records</Typography>
       </Box>
       <Box display={"flex"} flexDirection={"row"} gap={1.5} py={1.5}>
-        {lifts?.map(({ weight, date, reps }) => (
-          <LiftCard weight={weight} date={date} reps={reps} />
+        {lifts?.map(({ weight, date, reps, id }) => (
+          <LiftCard key={id} weight={weight} date={date} reps={reps} />
         ))}
         <LiftCard weight={0} date={dayjs(Date.now()).toString()} isAddButton />
       </Box>

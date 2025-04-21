@@ -39,7 +39,7 @@ export default function WeightSlider({
           px={0.75}
           borderRadius={0.5}
         >
-          <Typography>{`${calculatedWeight} kg`}</Typography>
+          <Typography>{`${calculatedWeight.toFixed(0)} kg`}</Typography>
         </Box>
       </Box>
       <Box>

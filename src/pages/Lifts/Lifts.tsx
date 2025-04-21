@@ -65,7 +65,7 @@ export default function Lifts() {
       <WeightSlider
         maxWeight={liftRecords?.find((lift) => lift.isMax)?.weight}
       />
-      <LiftTracker />
+      <LiftTracker numberOfLifts={liftRecords?.length || 0} />
     </main>
   );
 }

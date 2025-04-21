@@ -1,39 +1,41 @@
+import dayjs from "dayjs";
 import { UserLiftTarget } from "../types/lifts";
+import { lifts } from "./staticLiftData";
 
 export const roryLiftTargets: UserLiftTarget[] = [
   {
-    liftName: "clean + jerk",
+    liftId: lifts[0].id,
     targetId: "rorytarget1",
-    targetWeight: "160 kg",
-    targetDate: new Date("2025-10-01"),
-    createdAt: new Date("2024-10-01"),
+    targetWeight: 160,
+    targetDate: dayjs("2025-10-01").toString(),
+    createdAt: dayjs("2024-10-01").toString(),
     userId: "rory",
   },
   {
-    liftName: "snatch",
+    liftId: lifts[1].id,
     targetId: "rorytarget2",
-    targetWeight: "185 kg",
-    targetDate: new Date("2025-10-01"),
-    createdAt: new Date("2024-10-01"),
+    targetWeight: 185,
+    targetDate: dayjs("2025-10-01").toString(),
+    createdAt: dayjs("2024-10-01").toString(),
     userId: "rory",
   },
 ];
 
 export const sallaLiftTargets: UserLiftTarget[] = [
   {
-    liftName: "clean + jerk",
+    liftId: lifts[0].id,
     targetId: "sallatarget1",
-    targetWeight: "200 kg",
-    targetDate: new Date("2025-06-01"),
-    createdAt: new Date("2024-10-01"),
+    targetWeight: 200,
+    targetDate: dayjs("2025-06-01").toString(),
+    createdAt: dayjs("2024-10-01").toString(),
     userId: "salla",
   },
   {
-    liftName: "snatch",
+    liftId: lifts[1].id,
     targetId: "sallatarget2",
-    targetWeight: "140 kg",
-    targetDate: new Date("2025-09-01"),
-    createdAt: new Date("2024-10-01"),
+    targetWeight: 140,
+    targetDate: dayjs("2025-09-01").toString(),
+    createdAt: dayjs("2024-10-01").toString(),
     userId: "salla",
   },
 ];
