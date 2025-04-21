@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { LiftRecord } from "../../../../../types/lifts";
 import CardWrapper from "./CardWrapper";
 import { theme } from "../../../../../ui/theme";
+import CardText from "./CardText";
 export default function LiftCard({
   date,
   weight,
@@ -18,32 +19,44 @@ export default function LiftCard({
       gap={"0.25rem"}
     >
       <CardWrapper isAddButton={isAddButton}>
-        <Typography
-          color="black"
-          textAlign={"center"}
-          variant="body1"
+        <CardText
+          isAddButton={isAddButton}
           fontWeight={600}
-        >
-          {daysOfWeek[dayjs(date).day()]}
-        </Typography>
-        <Typography color="black" textAlign={"center"} variant="body1">
-          {dayjs(date).format("DD/MM")}
-        </Typography>
+          text={daysOfWeek[dayjs(date).day()]}
+        />
+        <CardText
+          isAddButton={isAddButton}
+          fontWeight={400}
+          text={dayjs(date).format("DD/MM")}
+        />
       </CardWrapper>
-      {weight === 0 ? (
-        <CardWrapper isAddButton={isAddButton}>
-          <Button sx={{ padding: "0", color: theme.palette.primary.light }}>
-            {"+ Add"}
+      <CardWrapper isAddButton={Boolean(weight === 0)}>
+        {weight === 0 ? (
+          <Button
+            sx={{
+              padding: "0",
+              color: theme.palette.primary.light,
+              minWidth: "48px",
+            }}
+          >
+            <Typography
+              sx={{
+                color: theme.palette.primary.light,
+              }}
+              textAlign={"center"}
+              variant="body2"
+            >
+              {"+ Add"}
+            </Typography>{" "}
           </Button>
-        </CardWrapper>
-      ) : (
-        <CardWrapper>
+        ) : (
           <Typography
             color="black"
             textAlign={"center"}
+            variant="body2"
           >{`${weight} kg`}</Typography>
-        </CardWrapper>
-      )}
+        )}
+      </CardWrapper>
       <Typography color="black" textAlign={"center"}>
         {reps}
       </Typography>

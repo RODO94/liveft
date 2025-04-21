@@ -10,12 +10,12 @@ export default function CardWrapper({
     <Box
       display={"flex"}
       flexDirection={"column"}
-      py={0.25}
+      py={0.5}
       px={0.5}
       bgcolor={isAddButton ? theme.palette.background.transparent : "white"}
       width={"fit-content"}
       justifyContent={"center"}
-      minWidth={"64px"}
+      minWidth={"48px"}
       borderRadius={"4px"}
     >
       {children}
