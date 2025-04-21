@@ -1,4 +1,6 @@
-export default function LastLift() {
+import { LiftRecord } from "../../../types/lifts";
+
+export default function LastLifts({ lifts }: { lifts: LiftRecord[] | null }) {
   /**
    * This component needs to have a date tracker
    * Show dates of lift records
