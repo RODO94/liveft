@@ -62,7 +62,9 @@ export default function Lifts() {
         <Typography variant="h1">{getLiftName(liftId).name}</Typography>
       </Box>
       <LastLifts lifts={liftRecords} />
-      <WeightSlider />
+      <WeightSlider
+        maxWeight={liftRecords?.find((lift) => lift.isMax)?.weight}
+      />
       <LiftTracker />
     </main>
   );
