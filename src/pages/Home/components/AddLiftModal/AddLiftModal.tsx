@@ -6,15 +6,21 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import LiftAutocomplete from "./LiftInput/LiftAutocomplete";
-import { AllUserLifts, UserLift } from "../../../../types/lifts";
+import { Lift, LiftRecord } from "../../../../types/lifts";
 import { SetStateFunction } from "../../../../types/utils";
 import { StyledTextField } from "../../../../ui/components/StyledTextField";
-import { InputLabel } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import { getLiftName } from "../../../../data/staticLiftData";
+import { addNewLift, checkMaxWeight } from "./utils";
 
-export type LiftInformationState = Pick<UserLift, "name" | "weight" | "reps">;
+export interface LiftInformationState
+  extends Lift,
+    Pick<LiftRecord, "weight" | "reps"> {}
 
 const emptyLiftInformation: LiftInformationState = {
+  id: "",
   name: "",
+  slug: "",
   weight: 0,
   reps: 0,
 };
@@ -27,49 +33,50 @@ export default function AddLiftModal({
 }: {
   open: boolean;
   handleClose: SetStateFunction<boolean>;
-  lifts: AllUserLifts | null;
-  setLifts: SetStateFunction<AllUserLifts | null>;
+  lifts: LiftRecord[] | null;
+  setLifts: SetStateFunction<LiftRecord[] | null>;
 }) {
   const [liftInformation, setLiftInformation] =
     useState<LiftInformationState>(emptyLiftInformation);
+
+  const userId = window.sessionStorage.getItem("user");
+
+  if (!userId) return;
 
   const handleSubmit = () => {
     // TODO: Add error handling
     if (!liftInformation) return;
 
-    const { name, weight, reps } = liftInformation;
+    const { id, weight, reps } = liftInformation;
 
-    if (!name || !weight) return;
+    if (!id || !weight) return;
 
-    const lowercaseLiftName = name.toLowerCase();
+    const liftName = getLiftName(id)?.name;
 
-    const newLiftToAdd: UserLift = {
-      name: lowercaseLiftName,
+    const { isMax, updatedLiftRecords } = checkMaxWeight(
+      id,
+      userId,
+      weight,
+      lifts
+    );
+
+    const newLiftToAdd: LiftRecord = {
+      liftId: liftName ? id : addNewLift(id),
       weight: weight,
       date: new Date().toLocaleDateString("en-GB"),
       id: crypto.randomUUID(),
-      userId: "rory",
+      userId: userId,
       reps: reps || undefined,
+      isMax: isMax,
     };
 
-    if (!lifts) {
-      setLifts({ [lowercaseLiftName]: [newLiftToAdd] });
+    if (lifts === null) {
+      setLifts([newLiftToAdd]);
       resetAndCloseDialog();
       return;
     }
-
-    if (!lifts[lowercaseLiftName]) {
-      setLifts({ ...lifts, [lowercaseLiftName]: [newLiftToAdd] });
-      resetAndCloseDialog();
-      return;
-    }
-
-    const newSetOfLifts: AllUserLifts = {
-      ...lifts,
-      [lowercaseLiftName]: [...lifts[lowercaseLiftName], newLiftToAdd],
-    };
-
-    setLifts(newSetOfLifts);
+    if (updatedLiftRecords) setLifts([...updatedLiftRecords, newLiftToAdd]);
+    if (!updatedLiftRecords) setLifts([...lifts, newLiftToAdd]);
     resetAndCloseDialog();
   };
 

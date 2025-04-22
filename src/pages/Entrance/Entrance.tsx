@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import Logo from "../../ui/components/Logo";
 import EntranceActions from "./components/EntranceActions";
 import { useState } from "react";

@@ -1,35 +1,41 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { UserLift } from "../../../types/lifts";
+import { type LiftRecord } from "../../../types/lifts";
 import { theme } from "../../../ui/theme";
-import { capitalize } from "@mui/material/utils";
 import { memo } from "react";
+import { getLiftName } from "../../../data/staticLiftData";
+import { Link } from "@tanstack/react-router";
 
 interface LiftRecordProps {
-  lifts: UserLift[];
+  lift: LiftRecord;
 }
-const LiftRecord = ({ lifts }: LiftRecordProps) => {
-  const heaviestLift = lifts.sort((a, b) => b.weight - a.weight)[0];
+const LiftRecord = ({ lift }: LiftRecordProps) => {
   return (
-    <Box
-      display={"flex"}
-      justifyContent="space-between"
-      padding={1}
-      alignItems={"center"}
-      component={"article"}
-      bgcolor={theme.palette.background.transparent}
+    <Link
+      to="/lift/$liftId"
+      params={{ liftId: lift.liftId }}
+      style={{ color: "white", cursor: "pointer", textDecoration: "none" }}
     >
-      <Typography variant="body1">{capitalize(heaviestLift.name)}</Typography>
       <Box
         display={"flex"}
-        alignItems="center"
-        py={0.5}
-        px={0.5}
-        bgcolor={theme.palette.primary.dark}
+        justifyContent="space-between"
+        padding={1}
+        alignItems={"center"}
+        component={"article"}
+        bgcolor={theme.palette.background.transparent}
       >
-        <Typography variant="body2">{`${heaviestLift.weight} kg`}</Typography>
+        <Typography variant="body1">{getLiftName(lift.liftId).name}</Typography>
+        <Box
+          display={"flex"}
+          alignItems="center"
+          py={0.5}
+          px={0.5}
+          bgcolor={theme.palette.primary.dark}
+        >
+          <Typography variant="body2">{`${lift.weight} kg`}</Typography>
+        </Box>
       </Box>
-    </Box>
+    </Link>
   );
 };
 

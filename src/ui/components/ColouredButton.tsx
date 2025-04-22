@@ -1,5 +1,5 @@
 import Button, { ButtonProps } from "@mui/material/Button";
-import { styled } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 export const ColouredButton = styled(Button)<ButtonProps>(({ theme }) => ({
   backgroundColor: theme.palette.action.dormant,

@@ -1,4 +1,7 @@
-import { Box, Button, InputLabel, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import Typography from "@mui/material/Typography";
 import { StyledTextField } from "../../../../ui/components/StyledTextField";
 import { theme } from "../../../../ui/theme";
 import { EntranceActionComponent } from "./types";

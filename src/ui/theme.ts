@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface TypeBackground {
@@ -12,6 +12,7 @@ declare module "@mui/material/styles" {
 export const theme = createTheme({
   palette: {
     primary: {
+      light: "#FEFEFE",
       main: "#BE3455",
       dark: "#721F33",
     },
@@ -40,14 +41,17 @@ export const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: "Inter",
     h1: {
       fontSize: "2rem",
       fontWeight: 500,
     },
+
     h2: {
       fontSize: "1.25rem",
       fontWeight: 400,
     },
+    subtitle1: { fontSize: "1.75rem", fontWeight: 200 },
     h3: {
       fontSize: "1.25rem",
       fontWeight: 400,
