@@ -1,4 +1,6 @@
-import { Box, Slider, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import Typography from "@mui/material/Typography";
 import { useMemo, useState } from "react";
 import { theme } from "../../../ui/theme";
 

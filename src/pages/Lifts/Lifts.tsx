@@ -5,7 +5,10 @@ import WeightSlider from "./components/WeightSlider";
 import { Link, useParams } from "@tanstack/react-router";
 import { getLiftName, liftRecordsTable } from "../../data/staticLiftData";
 import { LiftRecord } from "../../types/lifts";
-import { Box, IconButton, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { theme } from "../../ui/theme";
 

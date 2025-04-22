@@ -1,15 +1,17 @@
-import { Box, Button, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 import { LiftRecord } from "../../../../../types/lifts";
 import CardWrapper from "./CardWrapper";
 import { theme } from "../../../../../ui/theme";
 import CardText from "./CardText";
-export default function LiftCard({
-  date,
-  weight,
-  reps,
-  isAddButton = false,
-}: Pick<LiftRecord, "date" | "reps" | "weight"> & { isAddButton?: boolean }) {
+import { memo } from "react";
+type LiftCardProps = Pick<LiftRecord, "date" | "reps" | "weight"> & {
+  isAddButton?: boolean;
+};
+
+function LiftCard({ date, weight, reps, isAddButton = false }: LiftCardProps) {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   return (
     <Box
@@ -38,6 +40,7 @@ export default function LiftCard({
               color: theme.palette.primary.light,
               minWidth: "48px",
             }}
+            onClick={() => {}}
           >
             <Typography
               sx={{
@@ -63,3 +66,5 @@ export default function LiftCard({
     </Box>
   );
 }
+
+export const MemoizedLiftCard = memo(LiftCard);

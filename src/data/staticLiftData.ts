@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Lift, LiftRecord } from "../types/lifts";
 import { userProfiles } from "./staticUserData";
-import { capitalize } from "@mui/material";
+import { capitalize } from "@mui/material/utils";
 
 const [salla, rory] = userProfiles;
 

@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { theme } from "../../../../../ui/theme";
 
 export default function CardText({

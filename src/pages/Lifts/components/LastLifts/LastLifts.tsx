@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { LiftRecord } from "../../../../types/lifts";
-import LiftCard from "./components/LiftCard";
+import { MemoizedLiftCard } from "./components/LiftCard";
 import dayjs from "dayjs";
 
 export default function LastLifts({ lifts }: { lifts: LiftRecord[] | null }) {
@@ -20,9 +21,13 @@ export default function LastLifts({ lifts }: { lifts: LiftRecord[] | null }) {
       </Box>
       <Box display={"flex"} flexDirection={"row"} gap={1.5} py={1.5}>
         {lifts?.map(({ weight, date, reps, id }) => (
-          <LiftCard key={id} weight={weight} date={date} reps={reps} />
+          <MemoizedLiftCard key={id} weight={weight} date={date} reps={reps} />
         ))}
-        <LiftCard weight={0} date={dayjs(Date.now()).toString()} isAddButton />
+        <MemoizedLiftCard
+          weight={0}
+          date={dayjs(Date.now()).toString()}
+          isAddButton
+        />
       </Box>
     </Box>
   );

@@ -2,7 +2,10 @@ import { useParams } from "@tanstack/react-router";
 import { LiftRecord, UserLiftTarget } from "../../../types/lifts";
 import { useEffect, useState } from "react";
 import { roryLiftTargets } from "../../../data/staticLiftTargets";
-import { Box, Button, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
 import { theme } from "../../../ui/theme";
 import { ResponsiveBar } from "@nivo/bar";
 import { responsiveBarData } from "../../Home/components/Progress/utils";
