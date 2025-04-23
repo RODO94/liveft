@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "knex": "knex"
   },
@@ -17,9 +18,12 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "knex": "^3.1.0",
-    "mysql2": "^3.14.0"
+    "mysql2": "^3.14.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
     "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
   }
