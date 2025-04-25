@@ -12,7 +12,6 @@
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "allowJs": true,
-    "declaration": true,
     /* Type Checking */
     "strict": true /* Enable all strict type-checking options. */,
     "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
