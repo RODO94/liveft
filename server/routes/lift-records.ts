@@ -17,9 +17,9 @@ const router = express.Router();
  * I need to delete a lift record
  */
 
-router.route("/:userId").get(getUserRecords).post(addNewRecord);
+router.route("/user/:userId").get(getUserRecords).post(addNewRecord);
 router
-  .route("/:userId/:liftId")
+  .route("/user/:userId/lift/:liftId")
   .get(getRecordById)
   .put(updateRecord)
   .delete(deleteRecord);
