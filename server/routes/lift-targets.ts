@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import {
   addNewTarget,
   getTargetById,
@@ -19,4 +19,4 @@ router
   .post(addNewTarget);
 
 router.put("/target/:targetId", updateTarget);
-export const liftTargetRoutes = router;
+export const liftTargetRoutes: Router = router;

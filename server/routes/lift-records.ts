@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import {
   addNewRecord,
   deleteRecord,
@@ -24,4 +24,4 @@ router
   .put(updateRecord)
   .delete(deleteRecord);
 
-export const liftRecordsRoutes = router;
+export const liftRecordsRoutes: Router = router;

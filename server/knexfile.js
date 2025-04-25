@@ -1,13 +1,15 @@
 import { configDotenv } from "dotenv";
+import knex from "knex";
 const { parsed } = configDotenv();
-const knexConfig = {
+
+export const knexConfig = {
   development: {
     client: "mysql2",
     connection: {
-      host: parsed.DB_HOST,
-      database: parsed.DB_NAME,
-      user: parsed.DB_USER,
-      password: parsed.DB_PASSWORD,
+      host: parsed?.DB_HOST,
+      database: parsed?.DB_NAME,
+      user: parsed?.DB_USER,
+      password: parsed?.DB_PASSWORD,
       charset: "utf8",
     },
     migrations: {
@@ -18,4 +20,5 @@ const knexConfig = {
     },
   },
 };
-export default knexConfig;
+
+export const database = knex({ ...knexConfig.development });
