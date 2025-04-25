@@ -9,7 +9,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "knex": "knex",
     "start": "tsc && node dist/index.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "migrate:latest": "knex migrate:latest --migrations-directory=./dist/migrations",
+    "migrate:rollback": "knex migrate:rollback --migrations-directory=./dist/migrations",
+    "rollback:all": "knex migrate:rollback --all --migrations-directory=./dist/migrations"
   },
   "keywords": [],
   "author": "",
