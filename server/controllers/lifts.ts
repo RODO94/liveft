@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { database } from "../knexfile.js";
-import { liftSchema } from "../schema/lifts.js";
+import { liftSchema } from "../types/lifts.js";
 
 export const getAllLifts: RequestHandler = async (_req, res) => {
   const allLifts = await database("lifts").select("*");

@@ -1,4 +1,8 @@
-export type UserBase = {
-  id: string;
-  name: "Rory" | "Salla";
-};
+import { z } from "zod";
+
+export const userSchema = z.object({
+  id: z.enum(["rory", "salla"]),
+  name: z.enum(["Rory", "Salla"]),
+});
+
+export type UserBase = z.infer<typeof userSchema>;
