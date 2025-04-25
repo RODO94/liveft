@@ -6,15 +6,14 @@ import { liftRoutes } from "./routes/lifts.js";
 import { liftRecordsRoutes } from "./routes/lift-records.js";
 import { liftTargetRoutes } from "./routes/lift-targets.js";
 import { userRoutes } from "./routes/users.js";
-// import knexConfig from "./knexfile.js";
 
 const { parsed } = configDotenv();
+const PORT = parsed?.PORT || 8080;
+
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-// const db = knexConfig;
-const PORT = parsed?.PORT || 8080;
 
 app.get("/", (_req, res) => {
   res.send("Hello World");
