@@ -5,10 +5,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build --clean && tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "knex": "knex",
-    "start": "tsc && node dist/index.js",
+    "start": "pnpm run build && node dist/index.js",
     "lint": "eslint . --ext .ts",
     "migrate:latest": "knex migrate:latest --migrations-directory=./dist/migrations",
     "migrate:rollback": "knex migrate:rollback --migrations-directory=./dist/migrations",
