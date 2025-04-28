@@ -1,20 +1,12 @@
 import { RequestHandler } from "express";
-import { database } from "../knexfile.js";
-import { liftSchema } from "../types/lifts.js";
 
 export const getAllLifts: RequestHandler = async (_req, res) => {
-  const allLifts = await database("lifts").select("*");
-  res.status(200).json(allLifts);
+  res.status(200).json(res);
 };
 
-export const addNewLift: RequestHandler = async (req, res) => {
+export const addNewLift: RequestHandler = async (_req, res) => {
   try {
-    const newLift = liftSchema.parse(req.body);
     const newId = crypto.randomUUID();
-    await database("lifts").insert({
-      ...newLift,
-      id: newId,
-    });
     res.status(200).send({ message: "Lift added successfully", id: newId });
   } catch (error: unknown) {
     if (error instanceof Error) {

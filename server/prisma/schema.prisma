@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -17,7 +17,7 @@ datasource db {
 model Users {
   id          String        @id
   name        String
-  created_at  DateTime      @default(now())
+  created_at  String      
   LiftRecords LiftRecords[]
   LiftTargets LiftTargets[]
 }
@@ -35,7 +35,7 @@ model LiftRecords {
   user_id String
   lift_id String
   weight  Float
-  date    DateTime @default(now())
+  date    String 
   is_max  Boolean  @default(false)
   reps    Int      @default(0)
 
@@ -48,8 +48,8 @@ model LiftTargets {
   user_id    String
   lift_id    String
   weight     Float
-  date       DateTime @default(now())
-  created_at DateTime @default(now())
+  date       String
+  created_at String
   status     String   @default("active")
 
   User Users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)

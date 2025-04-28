@@ -8,7 +8,8 @@
     "build": "tsc --build --clean && tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pnpm run build && node dist/index.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "seed": "pnpm run build && node dist/seeds/index.js"
   },
   "keywords": [],
   "author": "",
