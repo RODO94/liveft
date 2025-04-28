@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id          String        @id
+  name        String
+  created_at  DateTime      @default(now())
+  LiftRecords LiftRecords[]
+  LiftTargets LiftTargets[]
+}
+
+model Lifts {
+  id          String        @id
+  name        String
+  slug        String        @unique
+  LiftRecords LiftRecords[]
+  LiftTargets LiftTargets[]
+}
+
+model LiftRecords {
+  id      String   @id
+  user_id String
+  lift_id String
+  weight  Float
+  date    DateTime @default(now())
+  is_max  Boolean  @default(false)
+  reps    Int      @default(0)
+
+  User Users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Lift Lifts @relation(fields: [lift_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model LiftTargets {
+  id         String   @id
+  user_id    String
+  lift_id    String
+  weight     Float
+  date       DateTime @default(now())
+  created_at DateTime @default(now())
+  status     String   @default("active")
+
+  User Users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Lift Lifts @relation(fields: [lift_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
