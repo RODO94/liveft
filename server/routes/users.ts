@@ -1,9 +1,10 @@
-import express from "express";
+import express, { Router } from "express";
 
 const router = express.Router();
 
-router.get("/", (_req, res) => {
-  res.send("User page");
-});
+// router.get("/", async (_req, res) => {
+//   // const users = await database("users").select("*");
+//   // res.status(200).json(users);
+// });
 
-export const userRoutes = router;
+export const userRoutes: Router = router;

@@ -7,24 +7,22 @@
   "scripts": {
     "build": "tsc --build --clean && tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "knex": "knex",
     "start": "pnpm run build && node dist/index.js",
     "lint": "eslint . --ext .ts",
-    "migrate:latest": "knex migrate:latest --migrations-directory=./dist/migrations",
-    "migrate:rollback": "knex migrate:rollback --migrations-directory=./dist/migrations",
-    "rollback:all": "knex migrate:rollback --all --migrations-directory=./dist/migrations"
+    "seed": "pnpm run build && node dist/seeds/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.7.1",
   "dependencies": {
+    "@prisma/client": "6.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "knex": "^3.1.0",
     "mysql2": "^3.14.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
@@ -33,6 +31,8 @@
     "@types/node": "^22.14.1",
     "eslint": "^9.25.1",
     "globals": "^16.0.0",
+    "prisma": "^6.6.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.0"
   }

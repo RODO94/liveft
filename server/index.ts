@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-
 import { configDotenv } from "dotenv";
 import { liftRoutes } from "./routes/lifts.js";
 import { liftRecordsRoutes } from "./routes/lift-records.js";
