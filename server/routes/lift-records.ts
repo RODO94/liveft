@@ -10,18 +10,17 @@ import {
 const router = express.Router();
 
 /**
- * I need to get lift records for a user
- * I don't need to get all lift records
- * I need to add a new lift record
- * I need to update an existing lift record
- * I need to delete a lift record
+ * I will still need to add user level permissions
+ * mostly for updating and deleting
  */
 
-router.route("/user/:userId").get(getUserRecords).post(addNewRecord);
+router.route("/user/:userId").get(getUserRecords);
+router.route("/user/:userId/lift/:liftId").post(addNewRecord);
+
 router
-  .route("/user/:userId/lift/:liftId")
-  .get(getRecordById)
+  .route("/record/:recordId")
   .put(updateRecord)
-  .delete(deleteRecord);
+  .delete(deleteRecord)
+  .get(getRecordById);
 
 export const liftRecordsRoutes: Router = router;
