@@ -3,18 +3,8 @@ import Header from "./components/Header";
 
 import { LiftsSection } from "./components/LiftsSection";
 import Progress from "./components/Progress/Progress";
-import { useEffect } from "react";
-import { getAllLifts } from "../../requests/lifts";
 
 export const Home = () => {
-  useEffect(() => {
-    const fetchLifts = async () => {
-      const response = await getAllLifts();
-      console.log(response);
-      return response;
-    };
-    fetchLifts();
-  }, []);
   return (
     <main
       style={{
