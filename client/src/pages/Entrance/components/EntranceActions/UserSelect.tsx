@@ -1,5 +1,4 @@
 import { useNavigate } from "@tanstack/react-router";
-import { userProfiles } from "../../../../data/staticUserData";
 import LargeButton from "../../../../ui/components/LargeButton";
 import { EntranceActionComponent } from "./types";
 import Box from "@mui/material/Box";
@@ -16,6 +15,7 @@ export const UserSelect: EntranceActionComponent = ({ action }) => {
       if (response.success) {
         setUsers(response.data);
       }
+      if (!response.success) console.error(response.error);
     };
     if (!users) fetchUsers();
   }, [users]);
@@ -28,16 +28,17 @@ export const UserSelect: EntranceActionComponent = ({ action }) => {
       width={"100%"}
       maxWidth={"450px"}
     >
-      {userProfiles.map((user) => (
-        <LargeButton
-          key={user.id}
-          text={user.name}
-          handleClick={() => {
-            window.sessionStorage.setItem("user", user.id);
-            navigate({ to: "/home" });
-          }}
-        />
-      ))}
+      {users &&
+        users.map((user) => (
+          <LargeButton
+            key={user.id}
+            text={user.name}
+            handleClick={() => {
+              window.sessionStorage.setItem("user", user.id);
+              navigate({ to: "/home" });
+            }}
+          />
+        ))}
     </Box>
   );
 };
