@@ -2,8 +2,8 @@ import axios from "axios";
 import { Lift, liftSchema } from "../types/lifts";
 import {
   ErrorMessage,
-  SuccessfulInsertResponse,
-  successfulInsertResponseSchema,
+  InsertSuccess,
+  InsertSuccessResponse,
 } from "../types/request";
 import { apiUrl, errorResponse } from "./utils";
 
@@ -21,9 +21,7 @@ export const addNewLift = async (newLift: Lift) => {
   try {
     const parsedLift = liftSchema.optional().parse(newLift);
     const { data } = await axios.post(`${apiUrl}/lifts`, parsedLift);
-    const parsedData: SuccessfulInsertResponse = data.parse(
-      successfulInsertResponseSchema
-    );
+    const parsedData: InsertSuccess = data.parse(InsertSuccessResponse);
     return parsedData;
   } catch (error) {
     return errorResponse(error);

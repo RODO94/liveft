@@ -5,11 +5,17 @@ export type ErrorMessage = {
   message: string;
 };
 
-export const successfulInsertResponseSchema = z.object({
+export const InsertSuccessResponse = z.object({
   id: z.string(),
   message: z.string(),
 });
 
-export type SuccessfulInsertResponse = z.infer<
-  typeof successfulInsertResponseSchema
->;
+export type InsertSuccess = z.infer<typeof InsertSuccessResponse>;
+export type UpdateReponse<T> = { message: string; data: T };
+
+export const UpdateSuccessResponse = z.object({
+  message: z.string(),
+  data: z.any(),
+});
+
+export type Result<T> = Promise<T | ErrorMessage>;

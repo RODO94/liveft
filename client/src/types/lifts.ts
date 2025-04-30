@@ -25,6 +25,16 @@ export interface LiftRecord {
   isMax: boolean;
 }
 
+export const LiftRecordShape = z.object({
+  id: z.string(),
+  liftId: z.string(),
+  weight: z.number().positive(),
+  date: z.string(),
+  reps: z.number().optional(),
+  userId: z.string(),
+  isMax: z.boolean(),
+});
+
 export type AllUserLifts = Record<LiftNames, LiftRecord[]>;
 
 export type LiftTargetBase = {
