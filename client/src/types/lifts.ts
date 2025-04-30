@@ -28,11 +28,13 @@ export interface LiftRecord {
 export const LiftRecordShape = z.object({
   id: z.string(),
   liftId: z.string(),
+  liftName: z.string(),
+  liftSlug: z.string(),
   weight: z.number().positive(),
   date: z.string(),
   reps: z.number().optional(),
   userId: z.string(),
-  isMax: z.boolean(),
+  isMax: z.boolean().optional(),
 });
 
 export type AllUserLifts = Record<LiftNames, LiftRecord[]>;

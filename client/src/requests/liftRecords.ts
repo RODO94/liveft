@@ -15,7 +15,6 @@ export const getUserLiftRecords = async (
   userId: string
 ): Result<LiftRecord[]> => {
   try {
-    userSchema.pick({ id: true }).parse(userId);
     const { data } = await axios.get(`${apiUrl}/lift-records/user/${userId}`);
     LiftRecordShape.array().parse(data);
     return { success: true, data };
@@ -26,7 +25,7 @@ export const getUserLiftRecords = async (
 
 export const getLiftRecordById = async (
   recordId: string
-): Result<LiftRecord> => {
+): Result<LiftRecord[]> => {
   try {
     z.string().uuid().parse(recordId);
     const { data } = await axios.get(`${apiUrl}/lift-records/${recordId}`);

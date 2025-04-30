@@ -2,7 +2,10 @@ import { RequestHandler } from "express";
 import { z } from "zod";
 import { prisma } from "../database.js";
 import { parseUUID } from "./utils.js";
-import { liftRecordsSchema } from "../types/liftRecords.js";
+import {
+  liftRecordsSchema,
+  liftRecordWithLiftInformation,
+} from "../types/liftRecords.js";
 import { CreateReponse, UpdateReponse } from "../types/utils.js";
 import { UUID } from "crypto";
 import { LiftRecords } from "@prisma/client";
@@ -13,17 +16,32 @@ export const getUserRecords: RequestHandler = async (req, res) => {
     z.string().parse(userId);
     const userLifts = await prisma.liftRecords.findMany({
       where: { user_id: userId },
+      include: { Lift: true },
     });
 
-    liftRecordsSchema
+    const mappedFieldNames = userLifts.map((lift) => {
+      return {
+        id: lift.id,
+        userId: lift.user_id,
+        liftId: lift.lift_id,
+        liftName: lift.Lift.name,
+        liftSlug: lift.Lift.slug,
+        reps: lift.reps,
+        weight: lift.weight,
+        date: lift.date,
+        isMax: lift.is_max,
+      };
+    });
+
+    liftRecordWithLiftInformation
       .array()
       .nonempty("No records can be found for this user")
-      .parse(userLifts);
+      .parse(mappedFieldNames);
 
-    res.status(200).send(userLifts);
+    res.status(200).send(mappedFieldNames);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      res.status(400).send(error.message);
+      res.status(400).send(JSON.parse(error.message));
     } else if (error instanceof Error) {
       console.error(error.message);
       res.status(500).send("Server Error");

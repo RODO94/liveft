@@ -1,25 +1,34 @@
 import { MemoizedLiftRecord } from "./LiftRecord";
 import Typography from "@mui/material/Typography";
 import { LiftRecord } from "../../../types/lifts";
-import { liftRecordsTable } from "../../../data/staticLiftData";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import AddLiftModal from "./AddLiftModal/AddLiftModal";
 import { ColouredButton } from "../../../ui/components/ColouredButton";
+import { getUserLiftRecords } from "../../../requests/liftRecords";
 
 export const LiftsSection = () => {
   const [openModal, setOpenModal] = useState(false);
   const [numberOfLiftsShown, setNumberOfLiftsShown] = useState(300);
   const [lifts, setLifts] = useState<LiftRecord[] | null>(null);
-  const userId = window.sessionStorage.getItem("user");
+  const userId = window.sessionStorage.getItem("userId");
 
   useEffect(() => {
-    if (!lifts) {
-      const userLiftRecords = liftRecordsTable.filter(
-        (lift) => lift.userId === userId
-      );
-      setLifts(userLiftRecords);
-    }
+    const getLifts = async () => {
+      if (userId) {
+        const response = await getUserLiftRecords(userId);
+        if (response.success) {
+          const userLiftRecords = response.data.filter(
+            (lift) => lift.userId === userId
+          );
+          setLifts(userLiftRecords);
+        }
+        if (!response.success) {
+          console.error(response.error);
+        }
+      }
+    };
+    if (!lifts) getLifts();
   }, [userId, lifts]);
 
   return (
