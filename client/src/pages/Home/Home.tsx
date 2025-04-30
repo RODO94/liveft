@@ -5,6 +5,7 @@ import { LiftsSection } from "./components/LiftsSection";
 import Progress from "./components/Progress/Progress";
 
 export const Home = () => {
+  const name = window.sessionStorage.getItem("name");
   return (
     <main
       style={{
@@ -14,7 +15,7 @@ export const Home = () => {
       }}
     >
       <Box display={"flex"} flexDirection={"column"} px={2} py={2} gap={6}>
-        <Header name={"Rory"} />
+        <Header name={name || "pal"} />
         <LiftsSection />
         <Progress />
       </Box>

@@ -34,7 +34,8 @@ export const UserSelect: EntranceActionComponent = ({ action }) => {
             key={user.id}
             text={user.name}
             handleClick={() => {
-              window.sessionStorage.setItem("user", user.id);
+              window.sessionStorage.setItem("userId", user.id);
+              window.sessionStorage.setItem("name", user.name);
               navigate({ to: "/home" });
             }}
           />
