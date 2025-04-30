@@ -1,13 +1,11 @@
 import axios from "axios";
 import { Lift, liftSchema } from "../types/lifts";
-import { z } from "zod";
-
-const apiUrl: string = import.meta.env.VITE_API_URL;
-
-type ErrorMessage = {
-  type: "zod error" | "API error" | "unknown error";
-  message: string;
-};
+import {
+  ErrorMessage,
+  SuccessfulInsertResponse,
+  successfulInsertResponseSchema,
+} from "../types/request";
+import { apiUrl, errorResponse } from "./utils";
 
 export const getAllLifts = async (): Promise<Lift[] | ErrorMessage> => {
   try {
@@ -15,12 +13,19 @@ export const getAllLifts = async (): Promise<Lift[] | ErrorMessage> => {
     liftSchema.array().parse(data);
     return data;
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return { type: "zod error", message: error.message };
-    }
-    if (error instanceof Error) {
-      return { type: "API error", message: error.message };
-    }
-    return { type: "unknown error", message: "An unexpected error occurred." };
+    return errorResponse(error);
+  }
+};
+
+export const addNewLift = async (newLift: Lift) => {
+  try {
+    const parsedLift = liftSchema.optional().parse(newLift);
+    const { data } = await axios.post(`${apiUrl}/lifts`, parsedLift);
+    const parsedData: SuccessfulInsertResponse = data.parse(
+      successfulInsertResponseSchema
+    );
+    return parsedData;
+  } catch (error) {
+    return errorResponse(error);
   }
 };
