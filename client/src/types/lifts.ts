@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { UserBase } from "./users";
 
 export type LiftNames = string;
@@ -6,8 +7,13 @@ export interface Lift {
   id: string;
   name: LiftNames;
   slug: string;
-  // hasTarget?: boolean;
 }
+
+export const liftSchema: z.ZodType<Lift> = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+});
 
 export interface LiftRecord {
   id: string;
