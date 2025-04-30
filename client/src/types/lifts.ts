@@ -39,15 +39,26 @@ export type AllUserLifts = Record<LiftNames, LiftRecord[]>;
 
 export type LiftTargetBase = {
   liftId: Lift["id"];
-  targetId: string;
-  targetWeight: number;
-  targetDate?: string;
+  id: string;
+  weight: number;
+  date?: string;
   createdAt: string;
+  status?: string;
 };
 
 export interface UserLiftTarget extends LiftTargetBase {
   userId: string;
 }
+
+export const LiftTargetShape = z.object({
+  id: z.string(),
+  user_id: z.string(),
+  lift_id: z.string(),
+  weight: z.number().positive(),
+  date: z.string(),
+  created_at: z.string(),
+  status: z.string().optional(),
+});
 
 export interface LiftTargetTracker extends LiftTargetBase {
   currentWeight: number;
