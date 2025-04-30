@@ -1,15 +1,14 @@
 import axios from "axios";
 import { apiUrl, errorResponse } from "./utils";
-import { z } from "zod";
 import { UserBase, userSchema } from "../types/users";
+import { Result } from "../types/request";
 
-export const getUserRecord = async (userId: string) => {
+export const getUsers = async (): Result<UserBase[]> => {
   try {
-    z.enum(["salla", "rory"]).parse(userId);
-    const { data } = await axios.get(`${apiUrl}/user/${userId}`);
-    const parsedUser: UserBase = userSchema.parse(data);
-    return parsedUser;
+    const { data } = await axios.get(`${apiUrl}/users`);
+    userSchema.parse(data);
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };

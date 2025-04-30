@@ -18,9 +18,9 @@ export const getUserLiftRecords = async (
     userSchema.pick({ id: true }).parse(userId);
     const { data } = await axios.get(`${apiUrl}/lift-records/user/${userId}`);
     LiftRecordShape.array().parse(data);
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };
 
@@ -31,9 +31,9 @@ export const getLiftRecordById = async (
     z.string().uuid().parse(recordId);
     const { data } = await axios.get(`${apiUrl}/lift-records/${recordId}`);
     LiftRecordShape.parse(data);
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };
 
@@ -54,9 +54,9 @@ export const addNewLiftRecord = async (
     );
 
     InsertSuccessResponse.parse(data);
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };
 
@@ -77,9 +77,9 @@ export const updateLiftRecord = async (
 
     UpdateSuccessResponse.parse(data);
 
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };
 
@@ -93,8 +93,8 @@ export const deleteLiftRecord = async (
     );
     z.object({ message: z.string(), id: z.string() }).parse(data);
 
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };

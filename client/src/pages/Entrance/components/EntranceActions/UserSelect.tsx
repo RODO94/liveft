@@ -3,9 +3,22 @@ import { userProfiles } from "../../../../data/staticUserData";
 import LargeButton from "../../../../ui/components/LargeButton";
 import { EntranceActionComponent } from "./types";
 import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
+import { getUsers } from "../../../../requests/users";
+import { UserBase } from "../../../../types/users";
 
 export const UserSelect: EntranceActionComponent = ({ action }) => {
+  const [users, setUsers] = useState<UserBase[] | null>(null);
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await getUsers();
+      if (response.success) {
+        setUsers(response.data);
+      }
+    };
+    if (!users) fetchUsers();
+  }, [users]);
   if (action !== "userSelect") return null;
   return (
     <Box

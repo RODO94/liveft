@@ -25,9 +25,9 @@ export const getTargetById = async (
 
     LiftTargetShape.parse(data);
 
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };
 
@@ -48,9 +48,9 @@ export const addNewTarget = async (
 
     InsertSuccessResponse.parse(data);
 
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };
 
@@ -68,8 +68,8 @@ export const updateTarget = async (
       updatedTarget
     );
     UpdateSuccessResponse.parse(data);
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };

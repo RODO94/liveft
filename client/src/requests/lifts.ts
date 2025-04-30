@@ -1,29 +1,25 @@
 import axios from "axios";
 import { Lift, liftSchema } from "../types/lifts";
-import {
-  ErrorMessage,
-  InsertSuccess,
-  InsertSuccessResponse,
-} from "../types/request";
+import { InsertSuccess, InsertSuccessResponse, Result } from "../types/request";
 import { apiUrl, errorResponse } from "./utils";
 
-export const getAllLifts = async (): Promise<Lift[] | ErrorMessage> => {
+export const getAllLifts = async (): Result<Lift> => {
   try {
     const { data } = await axios.get(`${apiUrl}/lifts`);
     liftSchema.array().parse(data);
-    return data;
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };
 
-export const addNewLift = async (newLift: Lift) => {
+export const addNewLift = async (newLift: Lift): Result<InsertSuccess> => {
   try {
     const parsedLift = liftSchema.optional().parse(newLift);
     const { data } = await axios.post(`${apiUrl}/lifts`, parsedLift);
-    const parsedData: InsertSuccess = data.parse(InsertSuccessResponse);
-    return parsedData;
+    data.parse(InsertSuccessResponse);
+    return { success: true, data };
   } catch (error) {
-    return errorResponse(error);
+    return { success: false, error: errorResponse(error) };
   }
 };

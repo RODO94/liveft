@@ -3,6 +3,7 @@ import { z } from "zod";
 export type ErrorMessage = {
   type: "zod error" | "API error" | "unknown error";
   message: string;
+  status?: "zod" | number;
 };
 
 export const InsertSuccessResponse = z.object({
@@ -18,4 +19,14 @@ export const UpdateSuccessResponse = z.object({
   data: z.any(),
 });
 
-export type Result<T> = Promise<T | ErrorMessage>;
+interface ResultSuccess<T> {
+  success: true;
+  data: T;
+}
+
+interface ResultError {
+  success: false;
+  error: ErrorMessage;
+}
+
+export type Result<T> = Promise<ResultSuccess<T> | ResultError>;
