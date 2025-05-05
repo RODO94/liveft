@@ -2,22 +2,25 @@ import Box from "@mui/material/Box";
 import { BarDatum, ResponsiveBar } from "@nivo/bar";
 import { useEffect, useState } from "react";
 import { responsiveBarData } from "./utils";
-import { liftRecordsTable, lifts } from "../../../../data/staticLiftData";
+import { lifts } from "../../../../data/staticLiftData";
+import { getUserLiftRecords } from "../../../../requests/liftRecords";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function ProgressChart() {
   const [userLiftRecords, setUserLiftRecords] = useState<BarDatum[] | null>(
     null
   );
+  const navigate = useNavigate();
   const userId = window.sessionStorage.getItem("userId");
-
+  if (!userId) navigate({ to: "/" });
   useEffect(() => {
-    if (!userLiftRecords) {
-      const userLiftRecords = liftRecordsTable.filter(
-        (lift) => lift.userId === userId
-      );
-      setUserLiftRecords(responsiveBarData(userLiftRecords));
-    }
-  }, [userLiftRecords, userId]);
+    const fetchLiftRecords = async () => {
+      const response = await getUserLiftRecords(userId!);
+      if (!response.success) return;
+      setUserLiftRecords(responsiveBarData(response.data));
+    };
+    fetchLiftRecords();
+  }, [userId]);
 
   if (userLiftRecords === null) return null;
 

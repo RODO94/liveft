@@ -3,7 +3,6 @@ import LastLifts from "./components/LastLifts/LastLifts";
 import LiftTracker from "./components/LiftTracker";
 import WeightSlider from "./components/WeightSlider";
 import { Link, useNavigate, useParams } from "@tanstack/react-router";
-import { getLiftName } from "../../data/staticLiftData";
 import { LiftRecord } from "../../types/lifts";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -73,7 +72,7 @@ export default function Lifts() {
             <ArrowBackIcon />
           </Link>
         </IconButton>
-        <Typography variant="h1">{getLiftName(liftId || "1").name}</Typography>
+        <Typography variant="h1">{liftRecords?.[0].liftName}</Typography>
       </Box>
       <LastLifts lifts={liftRecords} />
       <WeightSlider

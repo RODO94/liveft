@@ -8,7 +8,6 @@ import Button from "@mui/material/Button";
 import { theme } from "../../../ui/theme";
 import { ResponsiveBar } from "@nivo/bar";
 import { responsiveBarData } from "../../Home/components/Progress/utils";
-import { lifts } from "../../../data/staticLiftData";
 import { getTargetById } from "../../../requests/liftTargets";
 
 export default function LiftTracker({
@@ -106,7 +105,7 @@ export default function LiftTracker({
           <ResponsiveBar
             data={responsiveBarData(liftRecords)}
             indexBy={"month"}
-            keys={lifts.map((lift) => lift.slug)}
+            keys={[liftRecords[0].liftSlug]}
             margin={{ top: 10, right: 0, bottom: 50, left: 0 }}
             padding={0.5}
             innerPadding={0.5}

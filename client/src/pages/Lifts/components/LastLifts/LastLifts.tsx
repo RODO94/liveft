@@ -19,7 +19,13 @@ export default function LastLifts({ lifts }: { lifts: LiftRecord[] | null }) {
         <Typography variant="h1">Last lifts</Typography>
         <Typography variant="subtitle1">Most recent records</Typography>
       </Box>
-      <Box display={"flex"} flexDirection={"row"} gap={1.5} py={1.5}>
+      <Box
+        display={"flex"}
+        flexDirection={"row"}
+        flexWrap={"wrap"}
+        gap={1.5}
+        py={1.5}
+      >
         {lifts?.map(({ weight, date, reps, id }) => (
           <MemoizedLiftCard key={id} weight={weight} date={date} reps={reps} />
         ))}
