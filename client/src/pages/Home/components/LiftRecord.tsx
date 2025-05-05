@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import { type LiftRecord } from "../../../types/lifts";
 import { theme } from "../../../ui/theme";
 import { memo } from "react";
-import { getLiftName } from "../../../data/staticLiftData";
 import { Link } from "@tanstack/react-router";
 
 interface LiftRecordProps {
@@ -24,7 +23,7 @@ const LiftRecord = ({ lift }: LiftRecordProps) => {
         component={"article"}
         bgcolor={theme.palette.background.transparent}
       >
-        <Typography variant="body1">{getLiftName(lift.liftId).name}</Typography>
+        <Typography variant="body1">{lift.liftName}</Typography>
         <Box
           display={"flex"}
           alignItems="center"

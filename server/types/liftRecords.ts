@@ -5,7 +5,7 @@ export const liftRecordsSchema = z.object({
   lift_id: z.string(),
   reps: z.number().optional(),
   user_id: z.string(),
-  isMax: z.boolean(),
+  is_max: z.boolean(),
   weight: z.number(),
   date: z.string(),
 });

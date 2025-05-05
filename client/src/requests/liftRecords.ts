@@ -1,7 +1,11 @@
 import axios from "axios";
 import { apiUrl, errorResponse } from "./utils";
 import { z } from "zod";
-import { LiftRecord, LiftRecordShape as LiftRecordShape } from "../types/lifts";
+import {
+  AddLiftShape,
+  LiftRecord,
+  LiftRecordShape as LiftRecordShape,
+} from "../types/lifts";
 import {
   InsertSuccess,
   InsertSuccessResponse,
@@ -39,13 +43,13 @@ export const getLiftRecordById = async (
 export const addNewLiftRecord = async (
   userId: string,
   liftId: string,
-  record: LiftRecord
+  record: Pick<LiftRecord, "weight" | "date" | "reps" | "isMax">
 ): Result<InsertSuccess> => {
   try {
-    userSchema.pick({ id: true }).parse(userId);
-    z.string().uuid().parse(liftId);
+    userSchema.pick({ id: true }).parse({ id: userId });
+    z.string().parse(liftId);
 
-    LiftRecordShape.parse(record);
+    AddLiftShape.parse(record);
 
     const { data } = await axios.post(
       `${apiUrl}/lift-records/user/${userId}/lift/${liftId}`,

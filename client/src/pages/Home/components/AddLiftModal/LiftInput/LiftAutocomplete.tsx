@@ -1,10 +1,11 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import { lifts } from "../../../../../data/staticLiftData";
 import { SetStateFunction } from "../../../../../types/utils";
 import { filterOptionsWithAdd } from "./utils";
 import { StyledTextField } from "../../../../../ui/components/StyledTextField";
 import { LiftInformationState } from "../AddLiftModal";
 import { Lift } from "../../../../../types/lifts";
+import { useEffect, useState } from "react";
+import { getAllLifts } from "../../../../../requests/lifts";
 
 export default function LiftAutocomplete({
   value,
@@ -13,6 +14,16 @@ export default function LiftAutocomplete({
   value: LiftInformationState;
   setValue: SetStateFunction<LiftInformationState>;
 }) {
+  const [lifts, setLifts] = useState<Lift[]>();
+  useEffect(() => {
+    const fetchLifts = async () => {
+      const response = await getAllLifts();
+      if (!response.success) return;
+      setLifts(response.data);
+    };
+
+    fetchLifts();
+  }, []);
   return (
     <Autocomplete<Lift, false, false, true, "div">
       fullWidth
@@ -32,7 +43,7 @@ export default function LiftAutocomplete({
       clearOnBlur
       handleHomeEndKeys
       id="lift-name"
-      options={lifts}
+      options={lifts || []}
       getOptionLabel={(option) => {
         if (typeof option === "object") return option.name;
         return option;

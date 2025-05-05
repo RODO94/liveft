@@ -56,7 +56,6 @@ export const LiftsSection = () => {
           open={openModal}
           handleClose={setOpenModal}
           lifts={lifts}
-          setLifts={setLifts}
         />
       </Box>
     </Box>

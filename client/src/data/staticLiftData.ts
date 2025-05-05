@@ -22,7 +22,7 @@ export const getLiftName = (liftId: LiftRecord["liftId"]) => {
   if (targetLift)
     return { name: capitalize(targetLift.name), slug: targetLift.slug };
 
-  return { name: liftId, slug: liftId };
+  return false;
 };
 
 const [cleanAndJerk, , squat, deadlift, benchPress] = lifts;

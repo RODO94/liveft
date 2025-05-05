@@ -74,13 +74,27 @@ export const addNewRecord: RequestHandler = async (req, res) => {
   try {
     const { userId, liftId } = req.params;
     parseUUID(userId, liftId);
+    const mapToColumnNames = {
+      reps: req.body.reps,
+      weight: req.body.weight,
+      date: req.body.date,
+      is_max: req.body.isMax,
+    };
+
     const newId = crypto.randomUUID();
     const parsedRequest = liftRecordsSchema.parse({
-      ...req.body,
+      ...mapToColumnNames,
       id: newId,
       user_id: userId,
       lift_id: liftId,
     });
+
+    if (req.body.isMax) {
+      await prisma.liftRecords.updateMany({
+        where: { is_max: true, user_id: userId, lift_id: liftId },
+        data: { is_max: false },
+      });
+    }
 
     await prisma.liftRecords.create({
       data: parsedRequest,
