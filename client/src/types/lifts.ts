@@ -54,11 +54,11 @@ export interface UserLiftTarget extends LiftTargetBase {
 
 export const LiftTargetShape = z.object({
   id: z.string(),
-  user_id: z.string(),
-  lift_id: z.string(),
+  userId: z.string(),
+  liftId: z.string(),
   weight: z.number().positive(),
   date: z.string(),
-  created_at: z.string(),
+  createdAt: z.string(),
   status: z.string().optional(),
 });
 

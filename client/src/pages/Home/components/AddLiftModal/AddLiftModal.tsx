@@ -39,7 +39,7 @@ export default function AddLiftModal({
   const [liftInformation, setLiftInformation] =
     useState<LiftInformationState>(emptyLiftInformation);
 
-  const userId = window.sessionStorage.getItem("user");
+  const userId = window.sessionStorage.getItem("userId");
 
   if (!userId) return;
 

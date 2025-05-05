@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import LastLifts from "./components/LastLifts/LastLifts";
 import LiftTracker from "./components/LiftTracker";
 import WeightSlider from "./components/WeightSlider";
-import { Link, useParams } from "@tanstack/react-router";
-import { getLiftName, liftRecordsTable } from "../../data/staticLiftData";
+import { Link, useNavigate, useParams } from "@tanstack/react-router";
+import { getLiftName } from "../../data/staticLiftData";
 import { LiftRecord } from "../../types/lifts";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,18 +11,29 @@ import IconButton from "@mui/material/IconButton";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { theme } from "../../ui/theme";
+import { getUserLiftRecords } from "../../requests/liftRecords";
 
 export default function Lifts() {
   const [liftRecords, setLiftRecords] = useState<LiftRecord[] | null>(null);
+  const navigate = useNavigate();
 
   const { liftId } = useParams({ strict: false });
-  const userId = window.sessionStorage.getItem("user");
+  const userId = window.sessionStorage.getItem("userId");
 
+  if (!userId) navigate({ to: "/" });
   useEffect(() => {
-    const liftsByUserAndLift = liftRecordsTable.filter(
-      (lift) => lift.liftId === liftId && lift.userId === userId
-    );
-    setLiftRecords(liftsByUserAndLift);
+    const fetchUserLiftRecords = async () => {
+      if (userId) {
+        const response = await getUserLiftRecords(userId);
+        if (response.success) {
+          setLiftRecords(
+            response.data.filter((record) => record.liftId === liftId)
+          );
+        }
+      }
+    };
+
+    fetchUserLiftRecords();
 
     return () => {
       setLiftRecords(null);
@@ -62,13 +73,16 @@ export default function Lifts() {
             <ArrowBackIcon />
           </Link>
         </IconButton>
-        <Typography variant="h1">{getLiftName(liftId).name}</Typography>
+        <Typography variant="h1">{getLiftName(liftId || "1").name}</Typography>
       </Box>
       <LastLifts lifts={liftRecords} />
       <WeightSlider
         maxWeight={liftRecords?.find((lift) => lift.isMax)?.weight}
       />
-      <LiftTracker numberOfLifts={liftRecords?.length || 0} />
+      <LiftTracker
+        liftRecords={liftRecords}
+        numberOfLifts={liftRecords?.length || 0}
+      />
     </main>
   );
 }

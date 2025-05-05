@@ -60,9 +60,11 @@ function LiftCard({ date, weight, reps, isAddButton = false }: LiftCardProps) {
           >{`${weight} kg`}</Typography>
         )}
       </CardWrapper>
-      <Typography color="black" textAlign={"center"}>
-        {reps}
-      </Typography>
+      {reps !== 0 && (
+        <Typography color="black" textAlign={"center"}>
+          {reps}
+        </Typography>
+      )}
     </Box>
   );
 }

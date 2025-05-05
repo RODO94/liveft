@@ -8,7 +8,7 @@ export default function ProgressChart() {
   const [userLiftRecords, setUserLiftRecords] = useState<BarDatum[] | null>(
     null
   );
-  const userId = window.sessionStorage.getItem("user");
+  const userId = window.sessionStorage.getItem("userId");
 
   useEffect(() => {
     if (!userLiftRecords) {

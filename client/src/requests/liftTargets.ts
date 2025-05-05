@@ -9,19 +9,23 @@ import {
   UpdateReponse,
   UpdateSuccessResponse,
 } from "../types/request";
-import { LiftTargetBase, LiftTargetShape } from "../types/lifts";
+import {
+  LiftTargetBase,
+  LiftTargetShape,
+  UserLiftTarget,
+} from "../types/lifts";
 
 export const getTargetById = async (
   userId: string,
   liftId: string
-): Result<LiftTargetBase> => {
+): Result<UserLiftTarget> => {
   try {
-    userSchema.pick({ id: true }).parse(userId);
-    z.string().uuid().parse(liftId);
+    userSchema.pick({ id: true }).parse({ id: userId });
+    z.string().parse(liftId);
 
-    const { data } = await axios.get(
-      `${apiUrl}/lift-targets/user/${userId}/lift${liftId}`
-    );
+    const {
+      data: { data },
+    } = await axios.get(`${apiUrl}/lift-targets/user/${userId}/lift/${liftId}`);
 
     LiftTargetShape.parse(data);
 
