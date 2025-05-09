@@ -1,19 +1,16 @@
-import DialogTitle from "@mui/material/DialogTitle";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import { useState } from "react";
 import LiftAutocomplete from "./LiftInput/LiftAutocomplete";
 import { Lift, LiftRecord } from "../../../../types/lifts";
 import { SetStateFunction } from "../../../../types/utils";
-import { StyledTextField } from "../../../../ui/components/StyledTextField";
 import InputLabel from "@mui/material/InputLabel";
 import { addLiftToDatabase, checkMaxWeight } from "./utils";
 import { addNewLiftRecord } from "../../../../requests/liftRecords";
 import { checkLiftExits } from "../../../../requests/lifts";
 import { slugify } from "../../../../utils";
+import LiftModalBase from "../../../../ui/components/LiftModal/LiftModalBase";
+import LiftModalHeader from "../../../../ui/components/LiftModal/LiftModalHeader";
+import LiftModalActions from "../../../../ui/components/LiftModal/LiftModalActions";
+import TextInput from "../../../../ui/components/TextInput";
 
 export interface LiftInformationState
   extends Lift,
@@ -76,22 +73,11 @@ export default function AddLiftModal({
 
   return (
     <>
-      <Dialog
-        aria-hidden={!open}
-        open={open}
-        onClose={() => handleClose(false)}
-        fullWidth
-        maxWidth="sm"
-      >
-        <DialogTitle variant="h2" color="black">
-          Add a new lift
-        </DialogTitle>
-        <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+      <LiftModalBase open={open} handleClose={handleClose}>
+        <LiftModalHeader
+          title="Add a new lift"
+          subtitle="Fill in details of your lift"
         >
-          <DialogContentText variant="body2">
-            Fill in details of your lift
-          </DialogContentText>
           <InputLabel htmlFor="lift-name" color="secondary">
             Lift name
             <LiftAutocomplete
@@ -99,64 +85,33 @@ export default function AddLiftModal({
               setValue={setLiftInformation}
             />
           </InputLabel>
-          <InputLabel
-            htmlFor="weight"
-            id="weight-label"
-            color="secondary"
-            sx={{ display: "flex", flexDirection: "column" }}
-          >
-            Weight lifted in 'kg'
-            <StyledTextField
-              aria-describedby="weight-label"
-              autoFocus
-              autoComplete="off"
-              value={!liftInformation?.weight ? "" : liftInformation?.weight}
-              onChange={(e) =>
-                setLiftInformation({
-                  ...liftInformation,
-                  weight: Number(e.target.value),
-                })
-              }
-              required
-              id="weight"
-              name="weight"
-              type="text"
-              fullWidth
-              color="secondary"
-            />
-          </InputLabel>
-          <InputLabel
-            htmlFor="reps"
-            id="rep"
-            color="secondary"
-            sx={{ display: "flex", flexDirection: "column" }}
-          >
-            Number of reps
-            <StyledTextField
-              autoFocus
-              value={!liftInformation?.reps ? "" : liftInformation?.reps}
-              aria-describedby="reps-label"
-              onChange={(e) =>
-                setLiftInformation({
-                  ...liftInformation,
-                  reps: Number(e.target.value),
-                })
-              }
-              id="reps"
-              name="reps"
-              type="text"
-              fullWidth
-              color="secondary"
-            />
-          </InputLabel>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handleClose(false)}>Cancel</Button>
-          <Button type="submit" onClick={handleSubmit}>
-            Add lift
-          </Button>
-        </DialogActions>
-      </Dialog>
+          <TextInput
+            value={liftInformation?.weight}
+            name="weight"
+            onChange={(e) =>
+              setLiftInformation({
+                ...liftInformation,
+                weight: Number(e.target.value),
+              })
+            }
+            label="Weight lifted in 'kg'"
+          />
+          <TextInput
+            name="reps"
+            value={liftInformation?.reps || 0}
+            onChange={(e) =>
+              setLiftInformation({
+                ...liftInformation,
+                reps: Number(e.target.value),
+              })
+            }
+            label="Number of reps"
+          />
+        </LiftModalHeader>
+        <LiftModalActions
+          actions={{ add: handleSubmit, cancel: () => handleClose(false) }}
+        />
+      </LiftModalBase>
     </>
   );
 }

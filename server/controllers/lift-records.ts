@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
 import { prisma } from "../database.js";
-import { parseUUID } from "./utils.js";
+import { parseUUID, updateMaxRecord } from "./utils.js";
 import {
   liftRecordsSchema,
   liftRecordWithLiftInformation,
@@ -146,6 +146,17 @@ export const deleteRecord: RequestHandler = async (req, res) => {
   try {
     const recordId = req.params.recordId;
     z.string().uuid().parse(recordId);
+    const targetedRecord = await prisma.liftRecords.findFirst({
+      where: { id: recordId },
+    });
+
+    if (targetedRecord?.is_max) {
+      const hasMaxRecordUpdated = await updateMaxRecord(
+        targetedRecord.user_id,
+        targetedRecord.lift_id
+      );
+      if (!hasMaxRecordUpdated) throw Error("Unable to update is_max field");
+    }
     const deletedRecord = await prisma.liftRecords.delete({
       where: { id: recordId },
     });
