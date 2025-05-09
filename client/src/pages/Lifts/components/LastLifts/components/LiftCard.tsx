@@ -13,6 +13,7 @@ import LiftModalActions from "../../../../../ui/components/LiftModal/LiftModalAc
 import LiftAutocomplete from "../../../../Home/components/AddLiftModal/LiftInput/LiftAutocomplete";
 import { LiftInformationState } from "../../../../Home/components/AddLiftModal/AddLiftModal";
 import TextInput from "../../../../../ui/components/TextInput";
+import { deleteLiftRecord } from "../../../../../requests/liftRecords";
 
 type BaseLiftCard = {
   isAddButton?: false;
@@ -39,6 +40,18 @@ function LiftCard({
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const handleOpenDialog = () => !openDialog && setOpenDialog(true);
+
+  const handleDelete = async () => {
+    if (!lift?.id) return;
+    const response = await deleteLiftRecord(lift?.id);
+
+    if (response.success) {
+      console.log(response.data);
+    }
+    if (!response.success) {
+      console.error(response.error);
+    }
+  };
 
   if (!lift) return;
 
@@ -78,7 +91,7 @@ function LiftCard({
             <LiftModalActions
               actions={{
                 cancel: () => setOpenDialog(false),
-                delete: () => console.log("delete"),
+                delete: () => handleDelete(),
                 update: () => console.log("update"),
               }}
             />
