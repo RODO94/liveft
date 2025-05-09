@@ -24,3 +24,4 @@ export const liftRecordWithLiftInformation = z.object({
 });
 
 export type LiftRecord = z.infer<typeof liftRecordsSchema>;
+export type LiftRecordFrontend = z.infer<typeof liftRecordWithLiftInformation>;

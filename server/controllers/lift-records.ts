@@ -1,7 +1,11 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
 import { prisma } from "../database.js";
-import { parseUUID, updateMaxRecord } from "./utils.js";
+import {
+  parseUUID,
+  transformFieldNamesForDb,
+  updateMaxRecord,
+} from "./utils.js";
 import {
   liftRecordsSchema,
   liftRecordWithLiftInformation,
@@ -117,10 +121,11 @@ export const addNewRecord: RequestHandler = async (req, res) => {
 export const updateRecord: RequestHandler = async (req, res) => {
   try {
     const recordId = req.params.recordId;
-    z.string().uuid().parse(recordId);
+    z.string().parse(recordId);
 
+    const mappedFields = transformFieldNamesForDb(req.body);
     const partialSchema = liftRecordsSchema.partial();
-    const updatedRecord = partialSchema.parse(req.body);
+    const updatedRecord = partialSchema.parse(mappedFields);
 
     const newLiftRecord = await prisma.liftRecords.update({
       where: { id: recordId },

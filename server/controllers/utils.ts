@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { prisma } from "../database.js";
+import { LiftRecordFrontend } from "../types/liftRecords.js";
 
 export const parseUUID = (userId: string, liftId: string) => {
   z.string().parse(userId);
@@ -32,4 +33,11 @@ export const updateMaxRecord = async (userId: string, liftId: string) => {
     console.error(error);
     return false;
   }
+};
+
+export const transformFieldNamesForDb = (requestBody: LiftRecordFrontend) => {
+  const { liftId, ...otherKeys } = requestBody;
+  const bodyToChange = { lift_id: liftId, ...otherKeys };
+
+  return bodyToChange;
 };

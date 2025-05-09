@@ -13,7 +13,10 @@ import LiftModalActions from "../../../../../ui/components/LiftModal/LiftModalAc
 import LiftAutocomplete from "../../../../Home/components/AddLiftModal/LiftInput/LiftAutocomplete";
 import { LiftInformationState } from "../../../../Home/components/AddLiftModal/AddLiftModal";
 import TextInput from "../../../../../ui/components/TextInput";
-import { deleteLiftRecord } from "../../../../../requests/liftRecords";
+import {
+  deleteLiftRecord,
+  updateLiftRecord,
+} from "../../../../../requests/liftRecords";
 
 type BaseLiftCard = {
   isAddButton?: false;
@@ -48,6 +51,24 @@ function LiftCard({
     if (response.success) {
       console.log(response.data);
     }
+    if (!response.success) {
+      console.error(response.error);
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (!lift?.id) return;
+    const response = await updateLiftRecord(lift?.id, {
+      weight: activeLift.weight,
+      reps: activeLift.reps,
+      liftId: activeLift.id,
+    });
+
+    console.log(activeLift.id);
+    if (response.success) {
+      console.log(response.data);
+    }
+
     if (!response.success) {
       console.error(response.error);
     }
@@ -92,7 +113,7 @@ function LiftCard({
               actions={{
                 cancel: () => setOpenDialog(false),
                 delete: () => handleDelete(),
-                update: () => console.log("update"),
+                update: () => handleUpdate(),
               }}
             />
           </LiftModalHeader>
