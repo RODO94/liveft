@@ -1,9 +1,3 @@
-import DialogTitle from "@mui/material/DialogTitle";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import { useState } from "react";
 import LiftAutocomplete from "./LiftInput/LiftAutocomplete";
 import { Lift, LiftRecord } from "../../../../types/lifts";
@@ -14,6 +8,9 @@ import { addLiftToDatabase, checkMaxWeight } from "./utils";
 import { addNewLiftRecord } from "../../../../requests/liftRecords";
 import { checkLiftExits } from "../../../../requests/lifts";
 import { slugify } from "../../../../utils";
+import LiftModalBase from "../../../../ui/components/LiftModal/LiftModalBase";
+import LiftModalHeader from "../../../../ui/components/LiftModal/LiftModalHeader";
+import LiftModalActions from "../../../../ui/components/LiftModal/LiftModalActions";
 
 export interface LiftInformationState
   extends Lift,
@@ -76,22 +73,11 @@ export default function AddLiftModal({
 
   return (
     <>
-      <Dialog
-        aria-hidden={!open}
-        open={open}
-        onClose={() => handleClose(false)}
-        fullWidth
-        maxWidth="sm"
-      >
-        <DialogTitle variant="h2" color="black">
-          Add a new lift
-        </DialogTitle>
-        <DialogContent
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+      <LiftModalBase open={open} handleClose={handleClose}>
+        <LiftModalHeader
+          title="Add a new lift"
+          subtitle="Fill in details of your lift"
         >
-          <DialogContentText variant="body2">
-            Fill in details of your lift
-          </DialogContentText>
           <InputLabel htmlFor="lift-name" color="secondary">
             Lift name
             <LiftAutocomplete
@@ -149,14 +135,11 @@ export default function AddLiftModal({
               color="secondary"
             />
           </InputLabel>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handleClose(false)}>Cancel</Button>
-          <Button type="submit" onClick={handleSubmit}>
-            Add lift
-          </Button>
-        </DialogActions>
-      </Dialog>
+        </LiftModalHeader>
+        <LiftModalActions
+          actions={{ add: handleSubmit, cancel: () => handleClose(false) }}
+        />
+      </LiftModalBase>
     </>
   );
 }
