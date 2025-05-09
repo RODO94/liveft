@@ -78,7 +78,9 @@ export default function LiftTracker({
             position: "relative",
           }}
         >
-          <Typography variant="h1">{`${liftTarget?.weight} kg`}</Typography>
+          <Typography variant="h1">{`${
+            liftTarget?.weight || 0
+          } kg`}</Typography>
           <Typography variant="body2" fontWeight={300}>
             Current target
           </Typography>
@@ -101,7 +103,7 @@ export default function LiftTracker({
       <Box minHeight={"100px"} minWidth={"100px"} height={"40vh"} py={2}>
         <Typography variant="subtitle1">Lift weight per month</Typography>
 
-        {liftRecords && liftTarget && (
+        {liftRecords && (
           <ResponsiveBar
             data={responsiveBarData(liftRecords)}
             indexBy={"month"}
@@ -109,7 +111,9 @@ export default function LiftTracker({
             margin={{ top: 10, right: 0, bottom: 50, left: 0 }}
             padding={0.5}
             innerPadding={0.5}
-            maxValue={liftTarget.weight + 20}
+            maxValue={
+              liftTarget ? liftTarget.weight + 20 : liftRecords[0].weight + 70
+            }
             axisLeft={null}
             markers={[
               {
