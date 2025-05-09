@@ -6,34 +6,49 @@ import { LiftRecord } from "../../../../../types/lifts";
 import CardWrapper from "./CardWrapper";
 import { theme } from "../../../../../ui/theme";
 import CardText from "./CardText";
-import { memo } from "react";
-type LiftCardProps = Pick<LiftRecord, "date" | "reps" | "weight"> & {
-  isAddButton?: boolean;
+import { memo, useState } from "react";
+
+type BaseLiftCard = {
+  isAddButton?: false;
+  lift: LiftRecord;
 };
 
-function LiftCard({ date, weight, reps, isAddButton = false }: LiftCardProps) {
+type AddButtonProps = {
+  isAddButton: true;
+  lift?: null;
+};
+
+function LiftCard({
+  lift,
+  isAddButton = false,
+}: BaseLiftCard | AddButtonProps) {
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  const handleOpenDialog = () => !openDialog && setOpenDialog(true);
+
   return (
     <Box
       component={"article"}
       display={"flex"}
       flexDirection={"column"}
       gap={"0.25rem"}
+      onClick={handleOpenDialog}
     >
       <CardWrapper isAddButton={isAddButton}>
         <CardText
           isAddButton={isAddButton}
           fontWeight={600}
-          text={daysOfWeek[dayjs(date).day()]}
+          text={daysOfWeek[dayjs(lift?.date).day()]}
         />
         <CardText
           isAddButton={isAddButton}
           fontWeight={400}
-          text={dayjs(date).format("DD/MM")}
+          text={dayjs(lift?.date).format("DD/MM")}
         />
       </CardWrapper>
-      <CardWrapper isAddButton={Boolean(weight === 0)}>
-        {weight === 0 ? (
+      <CardWrapper isAddButton={isAddButton}>
+        {isAddButton ? (
           <Button
             sx={{
               padding: "0",
@@ -57,13 +72,13 @@ function LiftCard({ date, weight, reps, isAddButton = false }: LiftCardProps) {
             color="black"
             textAlign={"center"}
             variant="body2"
-          >{`${weight} kg`}</Typography>
+          >{`${lift?.weight} kg`}</Typography>
         )}
       </CardWrapper>
-      {reps !== 0 && reps && (
+      {lift?.reps !== 0 && lift?.reps && (
         <CardWrapper>
           <Typography color="black" variant="body2" textAlign={"center"}>
-            {`${reps} reps`}
+            {`${lift?.reps} reps`}
           </Typography>
         </CardWrapper>
       )}
