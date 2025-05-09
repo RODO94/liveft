@@ -18,6 +18,8 @@ export const liftSchema: z.ZodType<Lift> = z.object({
 export interface LiftRecord {
   id: string;
   liftId: Lift["id"];
+  liftName: string;
+  liftSlug: string;
   weight: number;
   date: string;
   reps?: number;
@@ -28,11 +30,21 @@ export interface LiftRecord {
 export const LiftRecordShape = z.object({
   id: z.string(),
   liftId: z.string(),
+  liftName: z.string(),
+  liftSlug: z.string(),
   weight: z.number().positive(),
   date: z.string(),
   reps: z.number().optional(),
   userId: z.string(),
-  isMax: z.boolean(),
+  isMax: z.boolean().optional(),
+});
+
+export const AddLiftShape = LiftRecordShape.omit({
+  liftName: true,
+  liftSlug: true,
+  id: true,
+  liftId: true,
+  userId: true,
 });
 
 export type AllUserLifts = Record<LiftNames, LiftRecord[]>;
@@ -52,11 +64,11 @@ export interface UserLiftTarget extends LiftTargetBase {
 
 export const LiftTargetShape = z.object({
   id: z.string(),
-  user_id: z.string(),
-  lift_id: z.string(),
+  userId: z.string(),
+  liftId: z.string(),
   weight: z.number().positive(),
   date: z.string(),
-  created_at: z.string(),
+  createdAt: z.string(),
   status: z.string().optional(),
 });
 

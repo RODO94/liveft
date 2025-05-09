@@ -1,14 +1,13 @@
 import { BarDatum } from "@nivo/bar";
 import { LiftRecord } from "../../../../types/lifts";
 import dayjs from "dayjs";
-import { getLiftName } from "../../../../data/staticLiftData";
 
 export const responsiveBarData = (liftData: LiftRecord[]): BarDatum[] => {
   const liftsByMonth = liftData.map((lift) => {
     return {
       month: dayjs(lift.date, "YYYY/MM/DD").format("MMM"),
       weight: lift.weight,
-      liftName: getLiftName(lift.liftId).slug,
+      liftName: lift.liftSlug,
     };
   });
 

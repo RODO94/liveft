@@ -9,11 +9,17 @@ export const errorResponse = (error: unknown): ErrorMessage => {
     return { status: "zod", type: "zod error", message: error.message };
   }
   if (error instanceof AxiosError) {
-    return { status: error.status, type: "API error", message: error.message };
+    return {
+      status: error.status,
+      type: "API error",
+      message: error.message,
+      error: error,
+    };
   }
   return {
     status: 500,
     type: "unknown error",
     message: "An unexpected error occurred.",
+    error: error,
   };
 };

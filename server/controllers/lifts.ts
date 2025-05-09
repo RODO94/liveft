@@ -12,17 +12,16 @@ export const getAllLifts: RequestHandler = async (_req, res) => {
 export const addNewLift: RequestHandler = async (req, res) => {
   try {
     const requestedNewLift = liftSchema.parse(req.body);
-    const newId = crypto.randomUUID();
     await prisma.lifts.create({
       data: {
+        id: requestedNewLift.id,
         name: requestedNewLift.name,
         slug: requestedNewLift.slug,
-        id: newId,
       },
     });
     res.status(200).send({
       message: "Lift added successfully",
-      id: newId,
+      id: req.body.id,
     } satisfies CreateReponse<UUID>);
   } catch (error: unknown) {
     if (error instanceof Error) {

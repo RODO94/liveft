@@ -10,4 +10,14 @@ export const liftTargetSchema = z.object({
   status: z.string().optional(),
 });
 
+export type MappedLiftTarget = {
+  id: string;
+  weight: number;
+  date: string;
+  createdAt: string;
+  liftId: string;
+  userId: string;
+  status: string;
+};
+
 export type LiftTarget = z.infer<typeof liftTargetSchema>;

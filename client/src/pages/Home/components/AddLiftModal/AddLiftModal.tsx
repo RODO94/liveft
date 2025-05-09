@@ -10,8 +10,10 @@ import { Lift, LiftRecord } from "../../../../types/lifts";
 import { SetStateFunction } from "../../../../types/utils";
 import { StyledTextField } from "../../../../ui/components/StyledTextField";
 import InputLabel from "@mui/material/InputLabel";
-import { getLiftName } from "../../../../data/staticLiftData";
-import { addNewLift, checkMaxWeight } from "./utils";
+import { addLiftToDatabase, checkMaxWeight } from "./utils";
+import { addNewLiftRecord } from "../../../../requests/liftRecords";
+import { checkLiftExits } from "../../../../requests/lifts";
+import { slugify } from "../../../../utils";
 
 export interface LiftInformationState
   extends Lift,
@@ -29,54 +31,41 @@ export default function AddLiftModal({
   open,
   handleClose,
   lifts,
-  setLifts,
 }: {
   open: boolean;
   handleClose: SetStateFunction<boolean>;
   lifts: LiftRecord[] | null;
-  setLifts: SetStateFunction<LiftRecord[] | null>;
 }) {
   const [liftInformation, setLiftInformation] =
     useState<LiftInformationState>(emptyLiftInformation);
 
-  const userId = window.sessionStorage.getItem("user");
+  const userId = window.sessionStorage.getItem("userId");
 
   if (!userId) return;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // TODO: Add error handling
     if (!liftInformation) return;
 
-    const { id, weight, reps } = liftInformation;
+    const { id, weight, reps, name } = liftInformation;
 
     if (!id || !weight) return;
 
-    const liftName = getLiftName(id)?.name;
+    const doesNameExist = await checkLiftExits(slugify(name));
+    const liftId = doesNameExist ? id : await addLiftToDatabase(name, id);
+    if (!liftId) return;
 
-    const { isMax, updatedLiftRecords } = checkMaxWeight(
-      id,
-      userId,
-      weight,
-      lifts
-    );
+    const { isMax } = checkMaxWeight(id, userId, weight, lifts);
 
-    const newLiftToAdd: LiftRecord = {
-      liftId: liftName ? id : addNewLift(id),
-      weight: weight,
-      date: new Date().toLocaleDateString("en-GB"),
-      id: crypto.randomUUID(),
-      userId: userId,
-      reps: reps || undefined,
-      isMax: isMax,
-    };
+    const newLiftToAdd: Pick<LiftRecord, "weight" | "date" | "reps" | "isMax"> =
+      {
+        weight: weight,
+        date: new Date().toLocaleDateString("en-GB"),
+        reps: reps || undefined,
+        isMax: isMax,
+      };
 
-    if (lifts === null) {
-      setLifts([newLiftToAdd]);
-      resetAndCloseDialog();
-      return;
-    }
-    if (updatedLiftRecords) setLifts([...updatedLiftRecords, newLiftToAdd]);
-    if (!updatedLiftRecords) setLifts([...lifts, newLiftToAdd]);
+    await addNewLiftRecord(userId, liftId, newLiftToAdd);
     resetAndCloseDialog();
   };
 
@@ -120,6 +109,7 @@ export default function AddLiftModal({
             <StyledTextField
               aria-describedby="weight-label"
               autoFocus
+              autoComplete="off"
               value={!liftInformation?.weight ? "" : liftInformation?.weight}
               onChange={(e) =>
                 setLiftInformation({

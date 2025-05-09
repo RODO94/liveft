@@ -4,6 +4,7 @@ export function slugify(input: string): string {
 
   // Then replace all consecutive spaces with a single dash
   result = result
+    .toLowerCase()
     .split(" ")
     .filter((part) => part !== "")
     .join("-");

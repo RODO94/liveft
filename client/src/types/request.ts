@@ -4,6 +4,7 @@ export type ErrorMessage = {
   type: "zod error" | "API error" | "unknown error";
   message: string;
   status?: "zod" | number;
+  error?: unknown;
 };
 
 export const InsertSuccessResponse = z.object({

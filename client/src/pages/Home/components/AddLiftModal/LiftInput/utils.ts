@@ -18,7 +18,7 @@ export const filterOptionsWithAdd = (
   );
   if (inputValue !== "" && !isExisting) {
     filtered.push({
-      id: `${Math.random()}`,
+      id: crypto.randomUUID(),
       name: inputValue,
       slug: slugify(inputValue),
     });

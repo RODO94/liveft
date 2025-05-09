@@ -1,33 +1,46 @@
 import Box from "@mui/material/Box";
 import { BarDatum, ResponsiveBar } from "@nivo/bar";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { responsiveBarData } from "./utils";
-import { liftRecordsTable, lifts } from "../../../../data/staticLiftData";
+import { getUserLiftRecords } from "../../../../requests/liftRecords";
+import { useNavigate } from "@tanstack/react-router";
+import { LiftRecord } from "../../../../types/lifts";
 
 export default function ProgressChart() {
-  const [userLiftRecords, setUserLiftRecords] = useState<BarDatum[] | null>(
+  const [userLiftRecords, setUserLiftRecords] = useState<LiftRecord[] | null>(
     null
   );
-  const userId = window.sessionStorage.getItem("user");
+  const navigate = useNavigate();
+  const userId = window.sessionStorage.getItem("userId");
+  const uniqueSlugs = useMemo(() => {
+    const splitIntoSlugs = userLiftRecords?.map((lift) => lift.liftSlug);
+    return new Set(splitIntoSlugs);
+  }, [userLiftRecords]);
+
+  const liftBarData: BarDatum[] | null = useMemo(() => {
+    return userLiftRecords && responsiveBarData(userLiftRecords);
+  }, [userLiftRecords]);
+
+  if (!userId) navigate({ to: "/" });
 
   useEffect(() => {
-    if (!userLiftRecords) {
-      const userLiftRecords = liftRecordsTable.filter(
-        (lift) => lift.userId === userId
-      );
-      setUserLiftRecords(responsiveBarData(userLiftRecords));
-    }
-  }, [userLiftRecords, userId]);
+    const fetchLiftRecords = async () => {
+      const response = await getUserLiftRecords(userId!);
+      if (!response.success) return;
+      setUserLiftRecords(response.data);
+    };
+    fetchLiftRecords();
+  }, [userId]);
 
   if (userLiftRecords === null) return null;
 
   return (
     <Box minHeight={"100px"} minWidth={"100px"} height={"40vh"}>
-      {
+      {userLiftRecords && liftBarData && (
         <ResponsiveBar
-          data={userLiftRecords}
+          data={liftBarData}
           indexBy={"month"}
-          keys={lifts.map((lift) => lift.slug)}
+          keys={[...uniqueSlugs]}
           margin={{ top: 10, right: 30, bottom: 50, left: 30 }}
           padding={0.5}
           innerPadding={0.5}
@@ -48,7 +61,7 @@ export default function ProgressChart() {
             },
           }}
         />
-      }
+      )}
     </Box>
   );
 }

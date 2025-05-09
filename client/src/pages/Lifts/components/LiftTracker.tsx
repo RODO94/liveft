@@ -1,7 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { LiftRecord, UserLiftTarget } from "../../../types/lifts";
 import { useEffect, useState } from "react";
-import { roryLiftTargets } from "../../../data/staticLiftTargets";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -9,31 +8,35 @@ import Button from "@mui/material/Button";
 import { theme } from "../../../ui/theme";
 import { ResponsiveBar } from "@nivo/bar";
 import { responsiveBarData } from "../../Home/components/Progress/utils";
-import { liftRecordsTable, lifts } from "../../../data/staticLiftData";
+import { getTargetById } from "../../../requests/liftTargets";
 
 export default function LiftTracker({
   numberOfLifts,
+  liftRecords,
 }: {
   numberOfLifts: number;
+  liftRecords: LiftRecord[] | null;
 }) {
   const { liftId } = useParams({ strict: false });
-  const userId = window.sessionStorage.getItem("user");
+  const userId = window.sessionStorage.getItem("userId");
 
   const [liftTarget, setLiftTarget] = useState<UserLiftTarget | null>(null);
-  const [liftRecords, setLiftRecords] = useState<LiftRecord[] | null>(null);
 
   useEffect(() => {
-    if (!liftTarget || !liftRecords) {
-      const filteredTargets = roryLiftTargets.filter(
-        (target) => target.liftId === liftId
-      );
-      const filteredRecords = liftRecordsTable.filter(
-        (lift) => lift.liftId === liftId && lift.userId === userId
-      );
-      setLiftTarget(filteredTargets[0]);
-      setLiftRecords(filteredRecords);
-    }
-  }, [liftId, liftTarget, liftRecords, userId]);
+    const fetchLiftTargets = async () => {
+      if (userId && liftId) {
+        const response = await getTargetById(userId, liftId);
+        if (response.success) {
+          setLiftTarget(response.data);
+        }
+        if (!response.success) {
+          console.error(response.error);
+        }
+      }
+    };
+
+    fetchLiftTargets();
+  }, [liftId, userId]);
 
   return (
     <Box p={2}>
@@ -75,7 +78,9 @@ export default function LiftTracker({
             position: "relative",
           }}
         >
-          <Typography variant="h1">{`${liftTarget?.targetWeight} kg`}</Typography>
+          <Typography variant="h1">{`${
+            liftTarget?.weight || 0
+          } kg`}</Typography>
           <Typography variant="body2" fontWeight={300}>
             Current target
           </Typography>
@@ -98,15 +103,17 @@ export default function LiftTracker({
       <Box minHeight={"100px"} minWidth={"100px"} height={"40vh"} py={2}>
         <Typography variant="subtitle1">Lift weight per month</Typography>
 
-        {liftRecords && liftTarget && (
+        {liftRecords && (
           <ResponsiveBar
             data={responsiveBarData(liftRecords)}
             indexBy={"month"}
-            keys={lifts.map((lift) => lift.slug)}
+            keys={[liftRecords[0].liftSlug]}
             margin={{ top: 10, right: 0, bottom: 50, left: 0 }}
             padding={0.5}
             innerPadding={0.5}
-            maxValue={liftTarget.targetWeight + 20}
+            maxValue={
+              liftTarget ? liftTarget.weight + 20 : liftRecords[0].weight + 70
+            }
             axisLeft={null}
             markers={[
               {

@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { prisma } from "../database.js";
-import { liftTargetSchema } from "../types/liftTargets.js";
+import { liftTargetSchema, MappedLiftTarget } from "../types/liftTargets.js";
 import { parseUUID } from "./utils.js";
 import { CreateReponse, UpdateReponse } from "../types/utils.js";
 import { UUID } from "crypto";
@@ -22,11 +22,22 @@ export const getTargetById: RequestHandler = async (req, res) => {
       res
         .status(404)
         .send({ message: "Lift target not found", userId, liftId });
+      return;
     }
+
+    const mappedLiftTarget: MappedLiftTarget = {
+      id: liftTarget.id,
+      weight: liftTarget.weight,
+      date: liftTarget.date,
+      createdAt: liftTarget.created_at,
+      liftId: liftTarget.lift_id,
+      userId: liftTarget.user_id,
+      status: liftTarget.status,
+    };
 
     res.status(200).send({
       message: "Lift target retrieved successfully",
-      data: liftTarget,
+      data: mappedLiftTarget,
     });
   } catch (error) {
     if (error instanceof Error) {

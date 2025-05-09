@@ -1,5 +1,5 @@
-import { lifts } from "../../../../data/staticLiftData";
-import { LiftRecord } from "../../../../types/lifts";
+import { addNewLift } from "../../../../requests/lifts";
+import { Lift, LiftRecord } from "../../../../types/lifts";
 import { UserBase } from "../../../../types/users";
 import { slugify } from "../../../../utils";
 
@@ -25,13 +25,13 @@ export const checkMaxWeight = (
   return { isMax: false };
 };
 
-export const addNewLift = (liftName: string) => {
-  const liftId = `${Math.random().toPrecision(4)}`;
-  lifts.push({
-    id: liftId,
-    name: liftName,
-    slug: slugify(liftName),
-  });
+export const addLiftToDatabase = async (liftName: string, liftId: string) => {
+  const newLift: Lift = { id: liftId, name: liftName, slug: slugify(liftName) };
+  const response = await addNewLift(newLift);
+  if (!response.success) {
+    console.error(response.error);
+    return null;
+  }
 
-  return liftId;
+  return response.data.id;
 };
