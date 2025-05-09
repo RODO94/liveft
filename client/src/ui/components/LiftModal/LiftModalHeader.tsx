@@ -1,4 +1,6 @@
-import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { PropsWithChildren } from "react";
 
 export default function LiftModalHeader({
