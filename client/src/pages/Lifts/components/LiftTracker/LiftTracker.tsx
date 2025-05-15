@@ -28,7 +28,11 @@ export default function LiftTracker({
           setLiftTarget(response.data);
         }
         if (!response.success) {
-          console.error(response.error);
+          if (response.error.status === 404) {
+            setLiftTarget(null);
+          } else {
+            console.error(response.error);
+          }
         }
       }
     };
