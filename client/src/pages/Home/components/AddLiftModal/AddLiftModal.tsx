@@ -11,6 +11,7 @@ import LiftModalBase from "../../../../ui/components/LiftModal/LiftModalBase";
 import LiftModalHeader from "../../../../ui/components/LiftModal/LiftModalHeader";
 import LiftModalActions from "../../../../ui/components/LiftModal/LiftModalActions";
 import TextInput from "../../../../ui/components/TextInput";
+import { useLiftStore } from "../../../../store/liftStore";
 
 export interface LiftInformationState
   extends Lift,
@@ -35,6 +36,8 @@ export default function AddLiftModal({
 }) {
   const [liftInformation, setLiftInformation] =
     useState<LiftInformationState>(emptyLiftInformation);
+
+  const { fetchUsersLifts } = useLiftStore();
 
   const userId = window.sessionStorage.getItem("userId");
 
@@ -63,6 +66,7 @@ export default function AddLiftModal({
       };
 
     await addNewLiftRecord(userId, liftId, newLiftToAdd);
+    await fetchUsersLifts();
     resetAndCloseDialog();
   };
 
@@ -75,10 +79,10 @@ export default function AddLiftModal({
     <>
       <LiftModalBase open={open} handleClose={handleClose}>
         <LiftModalHeader
-          title="Add a new lift"
-          subtitle="Fill in details of your lift"
+          title='Add a new lift'
+          subtitle='Fill in details of your lift'
         >
-          <InputLabel htmlFor="lift-name" color="secondary">
+          <InputLabel htmlFor='lift-name' color='secondary'>
             Lift name
             <LiftAutocomplete
               value={liftInformation}
@@ -87,7 +91,7 @@ export default function AddLiftModal({
           </InputLabel>
           <TextInput
             value={liftInformation?.weight}
-            name="weight"
+            name='weight'
             onChange={(e) =>
               setLiftInformation({
                 ...liftInformation,
@@ -97,7 +101,7 @@ export default function AddLiftModal({
             label="Weight lifted in 'kg'"
           />
           <TextInput
-            name="reps"
+            name='reps'
             value={liftInformation?.reps || 0}
             onChange={(e) =>
               setLiftInformation({
@@ -105,7 +109,7 @@ export default function AddLiftModal({
                 reps: Number(e.target.value),
               })
             }
-            label="Number of reps"
+            label='Number of reps'
           />
         </LiftModalHeader>
         <LiftModalActions
