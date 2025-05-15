@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { getTargetById } from "../../../../requests/liftTargets";
+import {
+  addNewTarget,
+  getTargetById,
+  updateTarget,
+} from "../../../../requests/liftTargets";
 import LiftProgressChart from "./components/LiftProgressChart";
 import LiftStatsBoxes from "./components/LiftStatsBoxes";
 import LiftModalBase from "../../../../ui/components/LiftModal/LiftModalBase";
@@ -26,6 +30,7 @@ export default function LiftTracker({
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [liftTarget, setLiftTarget] = useState<UserLiftTarget | null>(null);
+  const [hadNoTarget, setHadNoTarget] = useState<boolean>(false);
 
   const baseTargetData: UserLiftTarget = {
     id: liftTarget?.id || crypto.randomUUID(),
@@ -46,6 +51,7 @@ export default function LiftTracker({
         setLiftTarget(response.data);
       } else if (response.error.status === 404) {
         setLiftTarget(null);
+        setHadNoTarget(true);
       } else {
         console.error("Error fetching target:", response.error);
       }
@@ -115,7 +121,57 @@ export default function LiftTracker({
             label='Target date'
           />
           <LiftModalActions
-            actions={liftTarget ? { update: () => {} } : { add: () => {} }}
+            actions={
+              !hadNoTarget
+                ? {
+                    update: async () => {
+                      console.info("Updating target...");
+                      if (!userId || !liftId || !liftTarget) return;
+                      try {
+                        const response = await updateTarget(
+                          liftTarget.id,
+                          liftTarget
+                        );
+                        console.log(response);
+                        if (response.success) {
+                          console.info("Target updated successfully");
+                          setOpenDialog(false);
+                        }
+                        if (!response.success) {
+                          console.error(
+                            "Error updating target:",
+                            response.error
+                          );
+                        }
+                      } catch (error) {
+                        console.error("Error updating target:", error);
+                      }
+                    },
+                  }
+                : {
+                    add: async () => {
+                      console.info("Updating target...");
+                      if (!userId || !liftId || !liftTarget) return;
+                      try {
+                        const response = await addNewTarget(
+                          userId,
+                          liftId,
+                          liftTarget
+                        );
+                        console.log(response);
+                        if (response.success) {
+                          console.info("Target added successfully");
+                          setOpenDialog(false);
+                        }
+                        if (!response.success) {
+                          console.error("Error adding target:", response.error);
+                        }
+                      } catch (error) {
+                        console.error("Error adding target:", error);
+                      }
+                    },
+                  }
+            }
           />
         </LiftModalHeader>
       </LiftModalBase>
