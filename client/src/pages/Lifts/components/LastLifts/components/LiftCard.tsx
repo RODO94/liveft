@@ -51,7 +51,7 @@ function LiftCard({
     const response = await deleteLiftRecord(lift?.id);
 
     if (response.success) {
-      console.log(response.data);
+      console.info("Lift deleted successfully");
       await refreshStore(activeLift.id);
       setOpenDialog(false);
     }
@@ -69,7 +69,7 @@ function LiftCard({
     });
 
     if (response.success) {
-      console.log(response.data);
+      console.info("Lift updated successfully");
       await refreshStore(activeLift.id);
       setOpenDialog(false);
     }
