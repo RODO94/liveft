@@ -11,13 +11,16 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { theme } from "../../ui/theme";
 import { getUserLiftRecords } from "../../requests/liftRecords";
+import { useLiftStore } from "../../store/liftStore";
 
 export default function Lifts() {
   const [liftRecords, setLiftRecords] = useState<LiftRecord[] | null>(null);
   const navigate = useNavigate();
 
   const { liftId } = useParams({ strict: false });
+  const { usersLifts } = useLiftStore();
   const userId = window.sessionStorage.getItem("userId");
+  console.log(usersLifts);
 
   if (!userId) navigate({ to: "/" });
   useEffect(() => {
@@ -59,7 +62,7 @@ export default function Lifts() {
         p={2}
       >
         <IconButton
-          aria-label="back"
+          aria-label='back'
           style={{
             color: theme.palette.background.paper,
             padding: 4,
@@ -68,11 +71,11 @@ export default function Lifts() {
             top: "1.25rem",
           }}
         >
-          <Link to="/home" style={{ color: "inherit" }}>
+          <Link to='/home' style={{ color: "inherit" }}>
             <ArrowBackIcon />
           </Link>
         </IconButton>
-        <Typography variant="h1">{liftRecords?.[0].liftName}</Typography>
+        <Typography variant='h1'>{liftRecords?.[0].liftName}</Typography>
       </Box>
       <LastLifts lifts={liftRecords} />
       <WeightSlider

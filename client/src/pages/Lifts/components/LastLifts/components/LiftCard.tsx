@@ -64,9 +64,9 @@ function LiftCard({
       liftId: activeLift.id,
     });
 
-    console.log(activeLift.id);
     if (response.success) {
       console.log(response.data);
+      setOpenDialog(false);
     }
 
     if (!response.success) {
@@ -86,12 +86,12 @@ function LiftCard({
           }}
         >
           <LiftModalHeader
-            title="Alter your lift record"
-            subtitle="Update or delete the record"
+            title='Alter your lift record'
+            subtitle='Update or delete the record'
           >
             <LiftAutocomplete value={activeLift} setValue={setActiveLift} />
             <TextInput
-              name="weight"
+              name='weight'
               value={activeLift.weight}
               onChange={(e) =>
                 setActiveLift({ ...activeLift, weight: Number(e.target.value) })
@@ -99,7 +99,7 @@ function LiftCard({
               label="Weight lifted in 'kg'"
             />
             <TextInput
-              name="reps"
+              name='reps'
               value={activeLift?.reps || 0}
               onChange={(e) =>
                 setActiveLift({
@@ -107,7 +107,7 @@ function LiftCard({
                   reps: Number(e.target.value),
                 })
               }
-              label="Number of reps"
+              label='Number of reps'
             />
             <LiftModalActions
               actions={{
@@ -153,22 +153,22 @@ function LiftCard({
                     color: theme.palette.primary.light,
                   }}
                   textAlign={"center"}
-                  variant="body2"
+                  variant='body2'
                 >
                   {"+ Add"}
                 </Typography>{" "}
               </Button>
             ) : (
               <Typography
-                color="black"
+                color='black'
                 textAlign={"center"}
-                variant="body2"
+                variant='body2'
               >{`${lift?.weight} kg`}</Typography>
             )}
           </CardWrapper>
           {lift?.reps !== 0 && lift?.reps && (
             <CardWrapper>
-              <Typography color="black" variant="body2" textAlign={"center"}>
+              <Typography color='black' variant='body2' textAlign={"center"}>
                 {`${lift?.reps} reps`}
               </Typography>
             </CardWrapper>
