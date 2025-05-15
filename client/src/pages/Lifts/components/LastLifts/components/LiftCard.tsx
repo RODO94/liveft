@@ -17,6 +17,7 @@ import {
   deleteLiftRecord,
   updateLiftRecord,
 } from "../../../../../requests/liftRecords";
+import { useLiftStore } from "../../../../../store/liftStore";
 
 type BaseLiftCard = {
   isAddButton?: false;
@@ -43,6 +44,7 @@ function LiftCard({
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const handleOpenDialog = () => !openDialog && setOpenDialog(true);
+  const { fetchUsersLifts, fetchRecordsForOneLift } = useLiftStore.getState();
 
   const handleDelete = async () => {
     if (!lift?.id) return;
@@ -66,6 +68,8 @@ function LiftCard({
 
     if (response.success) {
       console.log(response.data);
+      await fetchUsersLifts();
+      await fetchRecordsForOneLift(activeLift.id);
       setOpenDialog(false);
     }
 

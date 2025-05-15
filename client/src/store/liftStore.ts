@@ -4,11 +4,14 @@ import { getUserLiftRecords } from "../requests/liftRecords";
 
 interface LiftState {
   usersLifts: LiftRecord[];
+  recordsForOneLift: LiftRecord[];
   fetchUsersLifts: () => Promise<void>;
+  fetchRecordsForOneLift: (liftId: string) => Promise<void>;
 }
 
-export const useLiftStore = create<LiftState>((set) => ({
+export const useLiftStore = create<LiftState>((set, get) => ({
   usersLifts: [],
+  recordsForOneLift: [],
 
   fetchUsersLifts: async () => {
     try {
@@ -22,5 +25,12 @@ export const useLiftStore = create<LiftState>((set) => ({
     } catch (error) {
       console.error("Error fetching lifts:", error);
     }
+  },
+  fetchRecordsForOneLift: async (liftId: string) => {
+    const liftRecords = get().usersLifts;
+    const recordsForOneLift = liftRecords.filter(
+      (record) => record.liftId === liftId
+    );
+    set({ recordsForOneLift });
   },
 }));
