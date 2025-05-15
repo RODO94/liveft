@@ -90,7 +90,7 @@ export const deleteLiftRecord = async (
   recordId: string
 ): Result<{ message: string; id: string }> => {
   try {
-    z.string().uuid().parse(recordId);
+    z.string().parse(recordId);
     const { data } = await axios.delete(
       `${apiUrl}/lift-records/record/${recordId}`
     );
