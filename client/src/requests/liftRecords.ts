@@ -68,7 +68,7 @@ export const updateLiftRecord = async (
   updatedRecord: Partial<LiftRecord>
 ): Result<UpdateReponse<LiftRecord>> => {
   try {
-    z.string().uuid().parse(recordId);
+    z.string().parse(recordId);
 
     const partialLiftRecord = LiftRecordShape.partial();
     partialLiftRecord.parse(updatedRecord);

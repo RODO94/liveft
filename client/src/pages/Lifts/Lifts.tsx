@@ -1,43 +1,22 @@
-import { useEffect, useState } from "react";
 import LastLifts from "./components/LastLifts/LastLifts";
 import LiftTracker from "./components/LiftTracker";
 import WeightSlider from "./components/WeightSlider";
-import { Link, useNavigate, useParams } from "@tanstack/react-router";
-import { LiftRecord } from "../../types/lifts";
+import { Link, useNavigate } from "@tanstack/react-router";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { theme } from "../../ui/theme";
-import { getUserLiftRecords } from "../../requests/liftRecords";
+import { useLiftStore } from "../../store/liftStore";
 
 export default function Lifts() {
-  const [liftRecords, setLiftRecords] = useState<LiftRecord[] | null>(null);
   const navigate = useNavigate();
 
-  const { liftId } = useParams({ strict: false });
+  const { recordsForOneLift } = useLiftStore();
   const userId = window.sessionStorage.getItem("userId");
 
   if (!userId) navigate({ to: "/" });
-  useEffect(() => {
-    const fetchUserLiftRecords = async () => {
-      if (userId) {
-        const response = await getUserLiftRecords(userId);
-        if (response.success) {
-          setLiftRecords(
-            response.data.filter((record) => record.liftId === liftId)
-          );
-        }
-      }
-    };
-
-    fetchUserLiftRecords();
-
-    return () => {
-      setLiftRecords(null);
-    };
-  }, [liftId, userId]);
 
   return (
     <main
@@ -59,7 +38,7 @@ export default function Lifts() {
         p={2}
       >
         <IconButton
-          aria-label="back"
+          aria-label='back'
           style={{
             color: theme.palette.background.paper,
             padding: 4,
@@ -68,19 +47,19 @@ export default function Lifts() {
             top: "1.25rem",
           }}
         >
-          <Link to="/home" style={{ color: "inherit" }}>
+          <Link to='/home' style={{ color: "inherit" }}>
             <ArrowBackIcon />
           </Link>
         </IconButton>
-        <Typography variant="h1">{liftRecords?.[0].liftName}</Typography>
+        <Typography variant='h1'>{recordsForOneLift?.[0].liftName}</Typography>
       </Box>
-      <LastLifts lifts={liftRecords} />
+      <LastLifts lifts={recordsForOneLift} />
       <WeightSlider
-        maxWeight={liftRecords?.find((lift) => lift.isMax)?.weight}
+        maxWeight={recordsForOneLift?.find((lift) => lift.isMax)?.weight}
       />
       <LiftTracker
-        liftRecords={liftRecords}
-        numberOfLifts={liftRecords?.length || 0}
+        liftRecords={recordsForOneLift}
+        numberOfLifts={recordsForOneLift?.length || 0}
       />
     </main>
   );

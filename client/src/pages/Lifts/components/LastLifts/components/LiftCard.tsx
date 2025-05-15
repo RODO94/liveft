@@ -13,7 +13,11 @@ import LiftModalActions from "../../../../../ui/components/LiftModal/LiftModalAc
 import LiftAutocomplete from "../../../../Home/components/AddLiftModal/LiftInput/LiftAutocomplete";
 import { LiftInformationState } from "../../../../Home/components/AddLiftModal/AddLiftModal";
 import TextInput from "../../../../../ui/components/TextInput";
-import { deleteLiftRecord } from "../../../../../requests/liftRecords";
+import {
+  deleteLiftRecord,
+  updateLiftRecord,
+} from "../../../../../requests/liftRecords";
+import { useLiftStore } from "../../../../../store/liftStore";
 
 type BaseLiftCard = {
   isAddButton?: false;
@@ -40,6 +44,7 @@ function LiftCard({
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const handleOpenDialog = () => !openDialog && setOpenDialog(true);
+  const { fetchUsersLifts, fetchRecordsForOneLift } = useLiftStore.getState();
 
   const handleDelete = async () => {
     if (!lift?.id) return;
@@ -48,6 +53,26 @@ function LiftCard({
     if (response.success) {
       console.log(response.data);
     }
+    if (!response.success) {
+      console.error(response.error);
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (!lift?.id) return;
+    const response = await updateLiftRecord(lift?.id, {
+      weight: activeLift.weight,
+      reps: activeLift.reps,
+      liftId: activeLift.id,
+    });
+
+    if (response.success) {
+      console.log(response.data);
+      await fetchUsersLifts();
+      await fetchRecordsForOneLift(activeLift.id);
+      setOpenDialog(false);
+    }
+
     if (!response.success) {
       console.error(response.error);
     }
@@ -65,12 +90,12 @@ function LiftCard({
           }}
         >
           <LiftModalHeader
-            title="Alter your lift record"
-            subtitle="Update or delete the record"
+            title='Alter your lift record'
+            subtitle='Update or delete the record'
           >
             <LiftAutocomplete value={activeLift} setValue={setActiveLift} />
             <TextInput
-              name="weight"
+              name='weight'
               value={activeLift.weight}
               onChange={(e) =>
                 setActiveLift({ ...activeLift, weight: Number(e.target.value) })
@@ -78,7 +103,7 @@ function LiftCard({
               label="Weight lifted in 'kg'"
             />
             <TextInput
-              name="reps"
+              name='reps'
               value={activeLift?.reps || 0}
               onChange={(e) =>
                 setActiveLift({
@@ -86,13 +111,13 @@ function LiftCard({
                   reps: Number(e.target.value),
                 })
               }
-              label="Number of reps"
+              label='Number of reps'
             />
             <LiftModalActions
               actions={{
                 cancel: () => setOpenDialog(false),
                 delete: () => handleDelete(),
-                update: () => console.log("update"),
+                update: () => handleUpdate(),
               }}
             />
           </LiftModalHeader>
@@ -132,22 +157,22 @@ function LiftCard({
                     color: theme.palette.primary.light,
                   }}
                   textAlign={"center"}
-                  variant="body2"
+                  variant='body2'
                 >
                   {"+ Add"}
                 </Typography>{" "}
               </Button>
             ) : (
               <Typography
-                color="black"
+                color='black'
                 textAlign={"center"}
-                variant="body2"
+                variant='body2'
               >{`${lift?.weight} kg`}</Typography>
             )}
           </CardWrapper>
           {lift?.reps !== 0 && lift?.reps && (
             <CardWrapper>
-              <Typography color="black" variant="body2" textAlign={"center"}>
+              <Typography color='black' variant='body2' textAlign={"center"}>
                 {`${lift?.reps} reps`}
               </Typography>
             </CardWrapper>
