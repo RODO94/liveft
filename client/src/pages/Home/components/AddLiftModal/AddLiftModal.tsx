@@ -12,6 +12,7 @@ import LiftModalHeader from "../../../../ui/components/LiftModal/LiftModalHeader
 import LiftModalActions from "../../../../ui/components/LiftModal/LiftModalActions";
 import TextInput from "../../../../ui/components/TextInput";
 import { useLiftStore } from "../../../../store/liftStore";
+import dayjs from "dayjs";
 
 export interface LiftInformationState
   extends Lift,
@@ -60,7 +61,7 @@ export default function AddLiftModal({
     const newLiftToAdd: Pick<LiftRecord, "weight" | "date" | "reps" | "isMax"> =
       {
         weight: weight,
-        date: new Date().toLocaleDateString("en-GB"),
+        date: dayjs(Date.now()).toString(),
         reps: reps || undefined,
         isMax: isMax,
       };
