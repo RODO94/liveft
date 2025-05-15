@@ -1,7 +1,7 @@
 import { ResponsiveBar } from "@nivo/bar";
-import { LiftRecord, UserLiftTarget } from "../../../types/lifts";
-import { theme } from "../../../ui/theme";
-import { responsiveBarData } from "../../Home/components/Progress/utils";
+import { LiftRecord, UserLiftTarget } from "../../../../../types/lifts";
+import { theme } from "../../../../../ui/theme";
+import { responsiveBarData } from "../../../../Home/components/Progress/utils";
 import { Typography } from "@mui/material";
 
 interface LiftProgressChartProps {

@@ -1,5 +1,5 @@
 import LastLifts from "./components/LastLifts/LastLifts";
-import LiftTracker from "./components/LiftTracker";
+import LiftTracker from "./components/LiftTracker/LiftTracker";
 import WeightSlider from "./components/WeightSlider";
 import { Link, useNavigate } from "@tanstack/react-router";
 import Box from "@mui/material/Box";
