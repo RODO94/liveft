@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import StatsBox from "../../../../../ui/components/StatsBox";
 import { UserLiftTarget } from "../../../../../types/lifts";
+import { memo } from "react";
 
 interface LiftStatsBoxesProps {
   numberOfLifts: number;
@@ -10,7 +11,7 @@ interface LiftStatsBoxesProps {
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function LiftStatsBoxes({
+function LiftStatsBoxesComponent({
   numberOfLifts,
   liftTarget,
   setOpenDialog,
@@ -48,3 +49,5 @@ export default function LiftStatsBoxes({
     </Box>
   );
 }
+
+export const LiftStatsBoxes = memo(LiftStatsBoxesComponent);

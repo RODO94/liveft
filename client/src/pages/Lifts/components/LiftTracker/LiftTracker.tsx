@@ -1,6 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { LiftRecord, UserLiftTarget } from "../../../../types/lifts";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -9,8 +9,8 @@ import {
   getTargetById,
   updateTarget,
 } from "../../../../requests/liftTargets";
-import LiftProgressChart from "./components/LiftProgressChart";
-import LiftStatsBoxes from "./components/LiftStatsBoxes";
+import { LiftProgressChart } from "./components/LiftProgressChart";
+import { LiftStatsBoxes } from "./components/LiftStatsBoxes";
 import LiftModalBase from "../../../../ui/components/LiftModal/LiftModalBase";
 import LiftModalHeader from "../../../../ui/components/LiftModal/LiftModalHeader";
 import TextInput from "../../../../ui/components/TextInput";
@@ -30,16 +30,21 @@ export default function LiftTracker({
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [liftTarget, setLiftTarget] = useState<UserLiftTarget | null>(null);
-  const [hadNoTarget, setHadNoTarget] = useState<boolean>(false);
+  const [newLiftTarget, setNewLiftTarget] = useState<UserLiftTarget | null>(
+    null
+  );
 
-  const baseTargetData: UserLiftTarget = {
-    id: liftTarget?.id || crypto.randomUUID(),
-    liftId: liftId || "",
-    weight: liftTarget?.weight || 0,
-    date: liftTarget?.date || dayjs(Date.now()).format("YYYY-MM-DD"),
-    userId: userId || "",
-    createdAt: liftTarget?.createdAt || dayjs(Date.now()).format("YYYY-MM-DD"),
-  };
+  const baseTargetData: UserLiftTarget = useMemo(() => {
+    return {
+      id: liftTarget?.id || crypto.randomUUID(),
+      liftId: liftId || "",
+      weight: liftTarget?.weight || 0,
+      date: liftTarget?.date || dayjs(Date.now()).format("YYYY-MM-DD"),
+      userId: userId || "",
+      createdAt:
+        liftTarget?.createdAt || dayjs(Date.now()).format("YYYY-MM-DD"),
+    };
+  }, [liftTarget, liftId, userId]);
 
   useEffect(() => {
     const fetchLiftTargets = async () => {
@@ -51,7 +56,6 @@ export default function LiftTracker({
         setLiftTarget(response.data);
       } else if (response.error.status === 404) {
         setLiftTarget(null);
-        setHadNoTarget(true);
       } else {
         console.error("Error fetching target:", response.error);
       }
@@ -64,14 +68,14 @@ export default function LiftTracker({
     value: string | number,
     data: "weight" | "date"
   ) => {
-    if (!liftTarget) {
-      setLiftTarget({
+    if (!newLiftTarget) {
+      setNewLiftTarget({
         ...baseTargetData,
         [data]: value,
       });
     } else {
-      setLiftTarget({
-        ...liftTarget,
+      setNewLiftTarget({
+        ...newLiftTarget,
         [data]: value,
       });
     }
@@ -89,15 +93,9 @@ export default function LiftTracker({
         numberOfLifts={numberOfLifts}
         liftTarget={liftTarget}
       />
-
-      <Box minHeight={"100px"} minWidth={"100px"} height={"40vh"} py={2}>
-        {liftRecords && (
-          <LiftProgressChart
-            liftRecords={liftRecords}
-            liftTarget={liftTarget}
-          />
-        )}
-      </Box>
+      {liftRecords && (
+        <LiftProgressChart liftRecords={liftRecords} liftTarget={liftTarget} />
+      )}
       <LiftModalBase
         open={openDialog}
         handleClose={() => {
@@ -105,36 +103,38 @@ export default function LiftTracker({
         }}
       >
         <LiftModalHeader
-          title={liftTarget ? "Change your lift target" : "Add a lift target"}
+          title={
+            newLiftTarget ? "Change your lift target" : "Add a lift target"
+          }
           subtitle='Set a target for your lift'
         >
           <TextInput
             name='target weight'
-            value={liftTarget?.weight || ""}
+            value={newLiftTarget?.weight || ""}
             onChange={(e) => updateTargetData(Number(e.target.value), "weight")}
             label='Target weight'
           />
           <DateInput
             name='target date'
-            value={liftTarget?.date || ""}
+            value={newLiftTarget?.date || ""}
             onChange={(e) => updateTargetData(e.target.value, "date")}
             label='Target date'
           />
           <LiftModalActions
             actions={
-              !hadNoTarget
+              !liftTarget
                 ? {
                     update: async () => {
                       console.info("Updating target...");
-                      if (!userId || !liftId || !liftTarget) return;
+                      if (!userId || !liftId || !newLiftTarget) return;
                       try {
                         const response = await updateTarget(
-                          liftTarget.id,
-                          liftTarget
+                          liftId,
+                          newLiftTarget
                         );
-                        console.log(response);
                         if (response.success) {
                           console.info("Target updated successfully");
+                          setLiftTarget(newLiftTarget);
                           setOpenDialog(false);
                         }
                         if (!response.success) {
@@ -151,16 +151,16 @@ export default function LiftTracker({
                 : {
                     add: async () => {
                       console.info("Updating target...");
-                      if (!userId || !liftId || !liftTarget) return;
+                      if (!userId || !liftId || !newLiftTarget) return;
                       try {
                         const response = await addNewTarget(
                           userId,
                           liftId,
-                          liftTarget
+                          newLiftTarget
                         );
-                        console.log(response);
                         if (response.success) {
                           console.info("Target added successfully");
+                          setLiftTarget(newLiftTarget);
                           setOpenDialog(false);
                         }
                         if (!response.success) {

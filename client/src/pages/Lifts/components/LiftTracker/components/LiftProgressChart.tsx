@@ -2,14 +2,17 @@ import { ResponsiveBar } from "@nivo/bar";
 import { LiftRecord, UserLiftTarget } from "../../../../../types/lifts";
 import { theme } from "../../../../../ui/theme";
 import { responsiveBarData } from "../../../../Home/components/Progress/utils";
-import { Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
+import { memo } from "react";
 
 interface LiftProgressChartProps {
   liftRecords: LiftRecord[] | null;
   liftTarget: UserLiftTarget | null;
 }
 
-export default function LiftProgressChart({
+function LiftProgressChartComponent({
   liftRecords,
   liftTarget,
 }: LiftProgressChartProps) {
@@ -18,7 +21,7 @@ export default function LiftProgressChart({
   }
 
   return (
-    <>
+    <Box minHeight={"100px"} minWidth={"100px"} height={"40vh"} py={2}>
       <Typography variant='subtitle1'>Lift weight per month</Typography>
       <ResponsiveBar
         data={responsiveBarData(liftRecords)}
@@ -57,6 +60,8 @@ export default function LiftProgressChart({
           },
         }}
       />
-    </>
+    </Box>
   );
 }
+
+export const LiftProgressChart = memo(LiftProgressChartComponent);
