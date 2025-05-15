@@ -44,7 +44,7 @@ function LiftCard({
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const handleOpenDialog = () => !openDialog && setOpenDialog(true);
-  const { fetchUsersLifts, fetchRecordsForOneLift } = useLiftStore.getState();
+  const { refreshStore } = useLiftStore.getState();
 
   const handleDelete = async () => {
     if (!lift?.id) return;
@@ -68,8 +68,7 @@ function LiftCard({
 
     if (response.success) {
       console.log(response.data);
-      await fetchUsersLifts();
-      await fetchRecordsForOneLift(activeLift.id);
+      await refreshStore(activeLift.id);
       setOpenDialog(false);
     }
 
