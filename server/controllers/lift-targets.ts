@@ -60,7 +60,7 @@ export const addNewTarget: RequestHandler = async (req, res) => {
       id: newId,
       user_id: userId,
       lift_id: liftId,
-      created_at: Date.now().toLocaleString("en-GB"),
+      created_at: new Date().toLocaleString("en-GB"),
     });
 
     await prisma.liftTargets.create({
