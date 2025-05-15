@@ -150,7 +150,7 @@ export const deleteRecord: RequestHandler = async (req, res) => {
   // Deletes a record from the database
   try {
     const recordId = req.params.recordId;
-    z.string().uuid().parse(recordId);
+    z.string().parse(recordId);
     const targetedRecord = await prisma.liftRecords.findFirst({
       where: { id: recordId },
     });

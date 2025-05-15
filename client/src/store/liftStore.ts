@@ -48,7 +48,6 @@ export const useLiftStore = create<LiftState>()(
       storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({
         usersLifts: state.usersLifts,
-        recordsForOneLift: state.recordsForOneLift,
       }),
     }
   )

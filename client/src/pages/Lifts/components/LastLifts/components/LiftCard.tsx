@@ -52,6 +52,8 @@ function LiftCard({
 
     if (response.success) {
       console.log(response.data);
+      await refreshStore(activeLift.id);
+      setOpenDialog(false);
     }
     if (!response.success) {
       console.error(response.error);
