@@ -7,11 +7,13 @@ import { UserLiftTarget } from "../../../../../types/lifts";
 interface LiftStatsBoxesProps {
   numberOfLifts: number;
   liftTarget: UserLiftTarget | null;
+  setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function LiftStatsBoxes({
   numberOfLifts,
   liftTarget,
+  setOpenDialog,
 }: LiftStatsBoxesProps) {
   return (
     <Box sx={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
@@ -29,6 +31,7 @@ export default function LiftStatsBoxes({
         </Typography>
         <Button
           color='secondary'
+          onClick={() => setOpenDialog(true)}
           sx={{
             position: "absolute",
             right: "0.5rem",

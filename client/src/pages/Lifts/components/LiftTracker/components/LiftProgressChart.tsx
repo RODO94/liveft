@@ -34,7 +34,7 @@ export default function LiftProgressChart({
         markers={[
           {
             axis: "y",
-            value: 160,
+            value: liftTarget ? liftTarget.weight : 0,
             lineStyle: {
               stroke: theme.palette.success.light,
               strokeWidth: 4,
