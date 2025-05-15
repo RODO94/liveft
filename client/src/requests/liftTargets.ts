@@ -41,9 +41,8 @@ export const addNewTarget = async (
   newTarget: LiftTargetBase
 ): Result<InsertSuccess> => {
   try {
-    userSchema.pick({ id: true }).parse(userId);
-    z.string().uuid().parse(liftId);
-    LiftTargetShape.parse(newTarget);
+    userSchema.pick({ id: true }).parse({ id: userId });
+    z.string().parse(liftId);
 
     const { data } = await axios.post(
       `${apiUrl}/lift-targets/user/${userId}/lift/${liftId}`,
@@ -63,7 +62,7 @@ export const updateTarget = async (
   updatedTarget: LiftTargetBase
 ): Result<UpdateReponse<LiftTargetBase>> => {
   try {
-    z.string().uuid().parse(targetId);
+    z.string().parse(targetId);
     const partialTargetShape = LiftTargetShape.partial();
     partialTargetShape.parse(updatedTarget);
 

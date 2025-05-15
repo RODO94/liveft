@@ -60,6 +60,7 @@ export const addNewTarget: RequestHandler = async (req, res) => {
       id: newId,
       user_id: userId,
       lift_id: liftId,
+      created_at: new Date().toLocaleString("en-GB"),
     });
 
     await prisma.liftTargets.create({
@@ -81,7 +82,7 @@ export const addNewTarget: RequestHandler = async (req, res) => {
 export const updateTarget: RequestHandler = async (req, res) => {
   try {
     const targetId = req.params.targetId;
-    z.string().uuid().parse(targetId);
+    z.string().parse(targetId);
 
     const partialSchema = liftTargetSchema.partial();
     const updatedTarget = partialSchema.parse(req.body);
