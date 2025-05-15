@@ -49,7 +49,6 @@ export default function AddLiftModal({
     if (!id || !weight) return;
 
     const doesNameExist = await checkLiftExits(slugify(name));
-    console.log(doesNameExist);
     const liftId = doesNameExist ? id : await addLiftToDatabase(name, id);
     if (!liftId) return;
 
