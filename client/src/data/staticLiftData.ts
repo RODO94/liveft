@@ -31,6 +31,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "1",
     liftId: cleanAndJerk.id,
+    liftName: cleanAndJerk.name,
+    liftSlug: cleanAndJerk.slug,
     weight: 120,
     date: dayjs(Date.now()).toString(),
     userId: rory.id,
@@ -39,6 +41,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "2",
     liftId: cleanAndJerk.id,
+    liftName: cleanAndJerk.name,
+    liftSlug: cleanAndJerk.slug,
     weight: 100,
     date: dayjs("2025-01-13", "YYYY-MM-DD").toString(),
     userId: rory.id,
@@ -47,6 +51,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "3",
     liftId: cleanAndJerk.id,
+    liftName: cleanAndJerk.name,
+    liftSlug: cleanAndJerk.slug,
     weight: 110,
     date: dayjs("2025-02-21").toString(),
     userId: rory.id,
@@ -55,6 +61,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "4",
     liftId: squat.id,
+    liftName: squat.name,
+    liftSlug: squat.slug,
     weight: 100,
     date: dayjs("2024-11-01").toString(),
     userId: rory.id,
@@ -63,6 +71,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "5",
     liftId: squat.id,
+    liftName: squat.name,
+    liftSlug: squat.slug,
     weight: 140,
     date: dayjs("2025-01-05").toString(),
     userId: rory.id,
@@ -71,6 +81,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "6",
     liftId: squat.id,
+    liftName: squat.name,
+    liftSlug: squat.slug,
     weight: 110,
     date: dayjs("2024-11-01").toString(),
     userId: rory.id,
@@ -79,6 +91,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "7",
     liftId: deadlift.id,
+    liftName: deadlift.name,
+    liftSlug: deadlift.slug,
     weight: 180,
     date: dayjs("2025-03-01").toString(),
     userId: rory.id,
@@ -87,6 +101,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "8",
     liftId: deadlift.id,
+    liftName: deadlift.name,
+    liftSlug: deadlift.slug,
     weight: 100,
     date: dayjs("2025-03-15").toString(),
     userId: rory.id,
@@ -95,6 +111,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "9",
     liftId: deadlift.id,
+    liftName: deadlift.name,
+    liftSlug: deadlift.slug,
     weight: 90,
     date: dayjs("2025-04-03").toString(),
     userId: rory.id,
@@ -103,6 +121,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "10",
     liftId: benchPress.id,
+    liftName: benchPress.name,
+    liftSlug: benchPress.slug,
     weight: 65,
     date: dayjs("2024-12-15").toString(),
     userId: rory.id,
@@ -111,6 +131,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "11",
     liftId: benchPress.id,
+    liftName: benchPress.name,
+    liftSlug: benchPress.slug,
     weight: 80,
     date: dayjs("2024-12-17").toString(),
     userId: rory.id,
@@ -119,6 +141,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "12",
     liftId: benchPress.id,
+    liftName: benchPress.name,
+    liftSlug: benchPress.slug,
     weight: 100,
     date: dayjs("2025-04-10").toString(),
     userId: rory.id,
@@ -127,6 +151,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "13",
     liftId: cleanAndJerk.id,
+    liftName: cleanAndJerk.name,
+    liftSlug: cleanAndJerk.slug,
     weight: 120,
     date: dayjs(Date.now()).toString(),
     userId: salla.id,
@@ -135,6 +161,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "14",
     liftId: cleanAndJerk.id,
+    liftName: cleanAndJerk.name,
+    liftSlug: cleanAndJerk.slug,
     weight: 100,
     date: dayjs("2025-01-13", "YYYY-MM-DD").toString(),
     userId: salla.id,
@@ -143,6 +171,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "15",
     liftId: cleanAndJerk.id,
+    liftName: cleanAndJerk.name,
+    liftSlug: cleanAndJerk.slug,
     weight: 110,
     date: dayjs("2025-02-21").toString(),
     userId: salla.id,
@@ -151,6 +181,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "16",
     liftId: squat.id,
+    liftName: squat.name,
+    liftSlug: squat.slug,
     weight: 100,
     date: dayjs("2024-11-01").toString(),
     userId: salla.id,
@@ -159,6 +191,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "17",
     liftId: squat.id,
+    liftName: squat.name,
+    liftSlug: squat.slug,
     weight: 140,
     date: dayjs("2025-01-05").toString(),
     userId: salla.id,
@@ -167,6 +201,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "18",
     liftId: squat.id,
+    liftName: squat.name,
+    liftSlug: squat.slug,
     weight: 110,
     date: dayjs("2024-11-01").toString(),
     userId: salla.id,
@@ -175,6 +211,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "19",
     liftId: deadlift.id,
+    liftName: deadlift.name,
+    liftSlug: deadlift.slug,
     weight: 180,
     date: dayjs("2025-03-01").toString(),
     userId: salla.id,
@@ -183,6 +221,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "20",
     liftId: deadlift.id,
+    liftName: deadlift.name,
+    liftSlug: deadlift.slug,
     weight: 100,
     date: dayjs("2025-03-15").toString(),
     userId: salla.id,
@@ -191,6 +231,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "21",
     liftId: deadlift.id,
+    liftName: deadlift.name,
+    liftSlug: deadlift.slug,
     weight: 90,
     date: dayjs("2025-04-03").toString(),
     userId: salla.id,
@@ -199,6 +241,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "22",
     liftId: benchPress.id,
+    liftName: benchPress.name,
+    liftSlug: benchPress.slug,
     weight: 65,
     date: dayjs("2024-12-15").toString(),
     userId: salla.id,
@@ -207,6 +251,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "23",
     liftId: benchPress.id,
+    liftName: benchPress.name,
+    liftSlug: benchPress.slug,
     weight: 80,
     date: dayjs("2024-12-17").toString(),
     userId: salla.id,
@@ -215,6 +261,8 @@ export const liftRecordsTable: LiftRecord[] = [
   {
     id: "24",
     liftId: benchPress.id,
+    liftName: benchPress.name,
+    liftSlug: benchPress.slug,
     weight: 100,
     date: dayjs("2025-04-10").toString(),
     userId: salla.id,
