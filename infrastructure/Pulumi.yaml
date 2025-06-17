@@ -1,0 +1,10 @@
+name: live-infrastructure
+description: A minimal AWS TypeScript Pulumi program
+runtime:
+  name: nodejs
+  options:
+    packagemanager: pnpm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://www.pulumi.com/ai/api/project/98257230-224f-4c87-9ff0-dd90df08630e.zip
