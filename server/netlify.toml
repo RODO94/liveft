@@ -5,7 +5,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@prisma/client", "@prisma/client-runtime-utils", "@prisma/adapter-pg", ".prisma", "pg"]
+  external_node_modules = ["@prisma/client", "@prisma/client-runtime-utils", ".prisma", "pg"]
   included_files = [
     "generated/prisma/**",
     "node_modules/@prisma/**",
