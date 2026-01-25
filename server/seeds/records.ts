@@ -1,8 +1,8 @@
-import { prisma } from "../database.js";
+import { seedPrisma } from "./index.js";
 
 export const seedRecords = async () => {
-  await prisma.liftRecords.deleteMany({});
-  await prisma.liftRecords.createMany({
+  await seedPrisma.liftRecords.deleteMany();
+  await seedPrisma.liftRecords.createMany({
     data: [
       {
         id: "1",
