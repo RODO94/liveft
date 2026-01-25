@@ -5,7 +5,7 @@ import { parseUUID } from "./utils.js";
 import { CreateReponse, UpdateReponse } from "../types/utils.js";
 import { UUID } from "crypto";
 import { z } from "zod";
-import { LiftTargets } from "@prisma/client";
+import { LiftTargets } from "../generated/prisma/index.js";
 
 export const getTargetById: RequestHandler = async (req, res) => {
   // Fetch user records from the database
