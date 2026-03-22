@@ -2,6 +2,7 @@
   # Builds and deploys are handled by GitHub Actions (.github/workflows/deploy.yml).
   # Netlify's auto-build is disabled — set "Build command" to blank in the Netlify
   # dashboard (Site > Build & deploy > Build settings) and stop auto-publishing.
+  base = "."
   command = "/bin/true"
   publish = "client/dist"
   functions = "server/dist/netlify/functions"
