@@ -89,10 +89,18 @@ export const updateTarget: RequestHandler = async (req, res) => {
 
     const partialSchema = liftTargetSchema.partial();
     const updatedTarget = partialSchema.parse(req.body);
+    const createTarget = liftTargetSchema.parse({
+      ...updatedTarget,
+      id: crypto.randomUUID(),
+      user_id: updatedTarget.user_id,
+      lift_id: updatedTarget.lift_id,
+      created_at: new Date().toLocaleString("en-GB"),
+    });
 
-    const updateResponse = await prisma.liftTargets.update({
+    const updateResponse = await prisma.liftTargets.upsert({
       where: { id: parsedTargetId },
-      data: { ...updatedTarget },
+      update: { ...updatedTarget },
+      create: createTarget
     });
 
     res.status(200).send({
