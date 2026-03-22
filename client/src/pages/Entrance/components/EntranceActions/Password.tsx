@@ -41,7 +41,7 @@ export const Password: EntranceActionComponent = ({ action, setAction }) => {
       />
       <Button
         disabled={Boolean(
-          passwordValue !== import.meta.env.VITE_ENTRANCE_PASSWORD
+          passwordValue !== import.meta.env.VITE_ENTRANCE
         )}
         variant="contained"
         onClick={() => setAction("userSelect")}
