@@ -8,82 +8,43 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as LiftLiftIdRouteImport } from './routes/lift.$liftId'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as HomeImport } from './routes/home'
-import { Route as IndexImport } from './routes/index'
-import { Route as LiftLiftIdImport } from './routes/lift.$liftId'
-
-// Create/Update Routes
-
-const HomeRoute = HomeImport.update({
+const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LiftLiftIdRoute = LiftLiftIdImport.update({
+const LiftLiftIdRoute = LiftLiftIdRouteImport.update({
   id: '/lift/$liftId',
   path: '/lift/$liftId',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/home': {
-      id: '/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeImport
-      parentRoute: typeof rootRoute
-    }
-    '/lift/$liftId': {
-      id: '/lift/$liftId'
-      path: '/lift/$liftId'
-      fullPath: '/lift/$liftId'
-      preLoaderRoute: typeof LiftLiftIdImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/lift/$liftId': typeof LiftLiftIdRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/lift/$liftId': typeof LiftLiftIdRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/lift/$liftId': typeof LiftLiftIdRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/home' | '/lift/$liftId'
@@ -92,11 +53,36 @@ export interface FileRouteTypes {
   id: '__root__' | '/' | '/home' | '/lift/$liftId'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
   LiftLiftIdRoute: typeof LiftLiftIdRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lift/$liftId': {
+      id: '/lift/$liftId'
+      path: '/lift/$liftId'
+      fullPath: '/lift/$liftId'
+      preLoaderRoute: typeof LiftLiftIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -104,31 +90,6 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   LiftLiftIdRoute: LiftLiftIdRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/home",
-        "/lift/$liftId"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/home": {
-      "filePath": "home.tsx"
-    },
-    "/lift/$liftId": {
-      "filePath": "lift.$liftId.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

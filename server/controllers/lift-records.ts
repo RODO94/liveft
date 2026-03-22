@@ -17,9 +17,9 @@ import { LiftRecords } from "../generated/prisma/index.js";
 export const getUserRecords: RequestHandler = async (req, res) => {
   try {
     const userId = req.params.userId;
-    z.string().parse(userId);
+    const parsedUserId = z.string().parse(userId);
     const userLifts = await prisma.liftRecords.findMany({
-      where: { user_id: userId },
+      where: { user_id: parsedUserId },
       include: { Lift: true },
     });
 
@@ -56,9 +56,9 @@ export const getUserRecords: RequestHandler = async (req, res) => {
 export const getRecordById: RequestHandler = async (req, res) => {
   try {
     const recordId = req.params.recordId;
-    z.string().parse(recordId);
+    const parsedRecordId = z.string().parse(recordId);
     const targetLift = await prisma.liftRecords.findFirst({
-      where: { id: recordId },
+      where: { id: parsedRecordId },
     });
     if (!targetLift) {
       res.status(400).send("Record could not be found");
@@ -77,7 +77,9 @@ export const getRecordById: RequestHandler = async (req, res) => {
 export const addNewRecord: RequestHandler = async (req, res) => {
   try {
     const { userId, liftId } = req.params;
-    parseUUID(userId, liftId);
+    const parsedUserId = z.string().parse(userId);
+    const parsedLiftId = z.string().parse(liftId);
+    parseUUID(parsedUserId, parsedLiftId);
     const mapToColumnNames = {
       reps: req.body.reps,
       weight: req.body.weight,
@@ -95,7 +97,7 @@ export const addNewRecord: RequestHandler = async (req, res) => {
 
     if (req.body.isMax) {
       await prisma.liftRecords.updateMany({
-        where: { is_max: true, user_id: userId, lift_id: liftId },
+        where: { is_max: true, user_id: parsedUserId, lift_id: parsedLiftId },
         data: { is_max: false },
       });
     }
@@ -121,14 +123,14 @@ export const addNewRecord: RequestHandler = async (req, res) => {
 export const updateRecord: RequestHandler = async (req, res) => {
   try {
     const recordId = req.params.recordId;
-    z.string().parse(recordId);
+    const parsedRecordId = z.string().parse(recordId);
 
     const mappedFields = transformFieldNamesForDb(req.body);
     const partialSchema = liftRecordsSchema.partial();
     const updatedRecord = partialSchema.parse(mappedFields);
 
     const newLiftRecord = await prisma.liftRecords.update({
-      where: { id: recordId },
+      where: { id: parsedRecordId },
       data: updatedRecord,
     });
 
@@ -150,9 +152,9 @@ export const deleteRecord: RequestHandler = async (req, res) => {
   // Deletes a record from the database
   try {
     const recordId = req.params.recordId;
-    z.string().parse(recordId);
+    const parsedRecordId = z.string().parse(recordId);
     const targetedRecord = await prisma.liftRecords.findFirst({
-      where: { id: recordId },
+      where: { id: parsedRecordId },
     });
 
     if (targetedRecord?.is_max) {
@@ -163,7 +165,7 @@ export const deleteRecord: RequestHandler = async (req, res) => {
       if (!hasMaxRecordUpdated) throw Error("Unable to update is_max field");
     }
     const deletedRecord = await prisma.liftRecords.delete({
-      where: { id: recordId },
+      where: { id: parsedRecordId },
     });
 
     if (!deletedRecord) {
@@ -171,7 +173,7 @@ export const deleteRecord: RequestHandler = async (req, res) => {
     }
     res
       .status(200)
-      .send({ message: "Record deleted successfully", id: recordId });
+      .send({ message: "Record deleted successfully", id: parsedRecordId });
   } catch (error) {
     if (error instanceof z.ZodError) {
       res.status(400).send(error.message);

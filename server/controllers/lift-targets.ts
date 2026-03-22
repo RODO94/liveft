@@ -10,18 +10,19 @@ import { LiftTargets } from "../generated/prisma/index.js";
 export const getTargetById: RequestHandler = async (req, res) => {
   // Fetch user records from the database
   const { userId, liftId } = req.params;
-
-  parseUUID(userId, liftId);
+  const parsedUserId = z.string().parse(userId);
+  const parsedLiftId = z.string().parse(liftId);
+  parseUUID(parsedUserId, parsedLiftId);
 
   try {
     const liftTarget = await prisma.liftTargets.findFirst({
-      where: { user_id: userId, lift_id: liftId },
+      where: { user_id: parsedUserId, lift_id: parsedLiftId },
     });
 
     if (!liftTarget) {
       res
         .status(404)
-        .send({ message: "Lift target not found", userId, liftId });
+        .send({ message: "Lift target not found", userId: parsedUserId, liftId: parsedLiftId });
       return;
     }
 
@@ -51,15 +52,17 @@ export const addNewTarget: RequestHandler = async (req, res) => {
   const { userId, liftId } = req.params;
 
   try {
-    parseUUID(userId, liftId);
+    const parsedUserId = z.string().parse(userId);
+    const parsedLiftId = z.string().parse(liftId);
+    parseUUID(parsedUserId, parsedLiftId);
 
     const newId = crypto.randomUUID();
 
     const requestedTarget = liftTargetSchema.parse({
       ...req.body,
       id: newId,
-      user_id: userId,
-      lift_id: liftId,
+      user_id: parsedUserId,
+      lift_id: parsedLiftId,
       created_at: new Date().toLocaleString("en-GB"),
     });
 
@@ -82,13 +85,13 @@ export const addNewTarget: RequestHandler = async (req, res) => {
 export const updateTarget: RequestHandler = async (req, res) => {
   try {
     const targetId = req.params.targetId;
-    z.string().parse(targetId);
+    const parsedTargetId = z.string().parse(targetId);
 
     const partialSchema = liftTargetSchema.partial();
     const updatedTarget = partialSchema.parse(req.body);
 
     const updateResponse = await prisma.liftTargets.update({
-      where: { id: targetId },
+      where: { id: parsedTargetId },
       data: { ...updatedTarget },
     });
 
