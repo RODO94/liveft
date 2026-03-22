@@ -24,7 +24,9 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm --filter client install --frozen-lockfile
+          pnpm --filter server install --frozen-lockfile
 
       - name: Lint
         run: |
@@ -32,7 +34,8 @@ jobs:
           pnpm --filter server lint
 
       - name: Typecheck
-        run: pnpm --filter server typecheck
+        run: |
+          pnpm --filter server typecheck
 
       - name: Build server
         run: pnpm --filter server build:netlify
