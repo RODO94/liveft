@@ -6,6 +6,7 @@ import AddLiftModal from "./AddLiftModal/AddLiftModal";
 import { ColouredButton } from "../../../ui/components/ColouredButton";
 import { useLiftStore } from "../../../store/liftStore";
 import { LiftRecord } from "../../../types/lifts";
+import dayjs from "dayjs";
 
 export const LiftsSection = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -16,7 +17,7 @@ export const LiftsSection = () => {
       <Typography variant='h1'>Lifts</Typography>
       <Box display={"flex"} flexDirection='column' gap={1}>
         {usersLifts &&
-          usersLifts.map((lift: LiftRecord, index: number) => {
+          usersLifts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date))).map((lift: LiftRecord, index: number) => {
             if (numberOfLiftsShown <= index) return null;
             if (!lift.isMax) return null;
             return <MemoizedLiftRecord key={lift.id} lift={lift} />;
