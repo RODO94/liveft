@@ -12,7 +12,7 @@ import {
 } from "../types/liftRecords.js";
 import { CreateReponse, UpdateReponse } from "../types/utils.js";
 import { UUID } from "crypto";
-import { LiftRecords } from "../generated/prisma/index.js";
+import { LiftRecords } from "../generated/prisma/client.js";
 
 export const getUserRecords: RequestHandler = async (req, res) => {
   try {

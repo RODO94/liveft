@@ -1,12 +1,12 @@
 import "dotenv/config";
-import { PrismaClient } from "../generated/prisma/index.js";
+import { PrismaClient } from "../generated/prisma/client.js";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { seedLifts } from "./lifts.js";
 import { seedRecords } from "./records.js";
 import { seedTargets } from "./targets.js";
 import { seedUsers } from "./users.js";
 
-const adapter = new PrismaPg({ connectionString: process.env.NETLIFY_DATABASE_URL });
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 
 export const seedPrisma = new PrismaClient({ adapter });
 
