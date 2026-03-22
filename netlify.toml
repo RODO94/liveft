@@ -3,8 +3,8 @@
   # Netlify's auto-build is disabled — set "Build command" to blank in the Netlify
   # dashboard (Site > Build & deploy > Build settings) and stop auto-publishing.
   command = "/bin/true"
-  publish = "dist"
-  functions = "../server/dist/netlify/functions"
+  publish = "client/dist"
+  functions = "server/dist/netlify/functions"
 
 # Rewrite API calls to the serverless function
 [[redirects]]
