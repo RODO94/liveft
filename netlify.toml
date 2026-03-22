@@ -1,16 +1,8 @@
 [build]
-  # Builds and deploys are handled by GitHub Actions (.github/workflows/deploy.yml).
+  # Builds and deploys are handled by GitHub Actions (.github/workflows/deploy-client.yml).
   # Netlify's auto-build is disabled — set "Build command" to blank in the Netlify
   # dashboard (Site > Build & deploy > Build settings) and stop auto-publishing.
-  command = "/bin/true"
   publish = "client/dist"
-  functions = "server/dist/netlify/functions"
-
-# Rewrite API calls to the serverless function
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
-  status = 200
 
 # SPA fallback — serve index.html for all client routes
 [[redirects]]

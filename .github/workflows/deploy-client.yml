@@ -1,8 +1,12 @@
-name: Deploy to Netlify
+name: Deploy Client to Netlify
 
 on:
   push:
     branches: [main]
+    paths:
+      - client/**
+      - netlify.toml
+      - .github/workflows/deploy-client.yml
 
 jobs:
   deploy:
@@ -26,35 +30,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate Prisma Client
-        run: pnpm --filter server exec prisma generate
-
       - name: Lint
-        run: |
-          pnpm --filter client lint
-          pnpm --filter server lint
-
-      - name: Typecheck
-        run: |
-          pnpm --filter server typecheck
-
-      - name: Build server
-        run: pnpm --filter server build:netlify
+        run: pnpm --filter client lint
 
       - name: Build client
         run: pnpm --filter client build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
-      - name: Link Netlify site
-        run: |
-          mkdir -p .netlify
-          echo '{"siteId":"'"$NETLIFY_SITE_ID"'"}' > .netlify/state.json
-        env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
       - name: Deploy to Netlify
-        run: npx netlify-cli deploy --prod --no-build --dir=client/dist --functions=server/dist/netlify/functions
+        run: npx netlify-cli@16 deploy --prod --site=$NETLIFY_SITE_ID --dir=client/dist
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

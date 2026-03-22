@@ -8,6 +8,6 @@ export default defineConfig({
     seed: "tsx ./seeds/index.ts"
   },
   datasource: {
-    url: process.env.NETLIFY_DATABASE_URL ?? "",
+    url: process.env.DATABASE_URL ?? "",
   },
 });

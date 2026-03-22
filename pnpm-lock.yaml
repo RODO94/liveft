@@ -92,9 +92,6 @@ importers:
 
   server:
     dependencies:
-      '@netlify/functions':
-        specifier: ^5.1.2
-        version: 5.1.5
       '@prisma/adapter-pg':
         specifier: ^7.3.0
         version: 7.5.0
@@ -113,9 +110,6 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.2.1
-      serverless-http:
-        specifier: ^4.0.0
-        version: 4.0.0
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.19.15)(typescript@5.9.3)
@@ -827,14 +821,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  '@netlify/functions@5.1.5':
-    resolution: {integrity: sha512-mhTl6x3TWoRwNgz8HZ9zvSR9OHB/hDEA6VinBmWY5ubgycKNCerf6XyFaFnujH2Ygx3c32yg6QOOr1v9y8euug==}
-    engines: {node: '>=18.0.0'}
-
-  '@netlify/types@2.6.0':
-    resolution: {integrity: sha512-yD20EizHJDQxajJ66Vo8RTwLwR2jMNVxufPG8MHd2AScX8jW4z0VPnnJHArq2GYPFTFZRHmiAhDrXr5m8zof6w==}
-    engines: {node: ^18.14.0 || >=20}
 
   '@nivo/annotations@0.88.0':
     resolution: {integrity: sha512-NXE+1oIUn+EGWMQpnpeRMLgi2wyuzhGDoJQY4OUHissCUiNotid2oNQ/PXJwN0toiu+/j9SyhzI32xr70OPi7Q==}
@@ -2616,10 +2602,6 @@ packages:
     resolution: {integrity: sha512-xRXBn0pPqQTVQiC8wyQrKs2MOlX24zQ0POGaj0kultvoOCstBQM5yvOhAVSUwOMjQtTvsPWoNCHfPGwaaQJhTw==}
     engines: {node: '>= 18'}
 
-  serverless-http@4.0.0:
-    resolution: {integrity: sha512-KKl9h1+VApX9y2vHsVMogf906UXBwO3FDYiWPzqS0mCjEEx4Sx91JrssbWA7RN43HBuxrtoh8MkocZPvjyGnLg==}
-    engines: {node: '>=12.0'}
-
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
@@ -3545,12 +3527,6 @@ snapshots:
       react-is: 19.2.4
     optionalDependencies:
       '@types/react': 19.2.14
-
-  '@netlify/functions@5.1.5':
-    dependencies:
-      '@netlify/types': 2.6.0
-
-  '@netlify/types@2.6.0': {}
 
   '@nivo/annotations@0.88.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
@@ -5570,8 +5546,6 @@ snapshots:
       send: 1.2.1
     transitivePeerDependencies:
       - supports-color
-
-  serverless-http@4.0.0: {}
 
   setprototypeof@1.2.0: {}
 
