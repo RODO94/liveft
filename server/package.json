@@ -24,7 +24,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.7.1",
   "dependencies": {
     "@netlify/functions": "^5.1.2",
     "@prisma/adapter-pg": "^7.3.0",
