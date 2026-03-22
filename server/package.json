@@ -1,9 +1,8 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
   "type": "module",
-  "main": "index.js",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build:netlify": "prisma generate && tsc",
