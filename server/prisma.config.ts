@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { defineConfig, env } from 'prisma/config';
+import { defineConfig } from 'prisma/config';
 
 export default defineConfig({
   schema: 'prisma/schema.prisma',
@@ -8,6 +8,6 @@ export default defineConfig({
     seed: "tsx ./seeds/index.ts"
   },
   datasource: {
-    url: env("NETLIFY_DATABASE_URL"),
+    url: process.env.NETLIFY_DATABASE_URL ?? "",
   },
 });
