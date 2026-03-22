@@ -36,6 +36,7 @@ export default function TextInput({
         type="text"
         fullWidth
         color="secondary"
+        focused={false}
         {...inputProps}
       />
     </InputLabel>

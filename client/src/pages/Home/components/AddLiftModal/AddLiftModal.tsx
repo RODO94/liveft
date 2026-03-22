@@ -111,6 +111,7 @@ export default function AddLiftModal({
               })
             }
             label='Number of reps'
+          
           />
         </LiftModalHeader>
         <LiftModalActions
