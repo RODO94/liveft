@@ -92,14 +92,20 @@ export default function AddLiftModal({
           </InputLabel>
           <TextInput
             value={liftInformation?.weight}
-            name='weight'
-            onChange={(e) =>
+            name="weight"
+            onChange={(e) => {
+              const raw = e.target.value;
+              const parsed = parseFloat(raw);
               setLiftInformation({
                 ...liftInformation,
-                weight: Number(e.target.value),
-              })
-            }
+                weight: parsed ?? 0,
+              });
+            }}
             label="Weight lifted in 'kg'"
+            inputProps={{
+              type: "number",
+              inputProps: { step: "any", min: 0 },
+            }}
           />
           <TextInput
             name='reps'

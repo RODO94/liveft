@@ -28,7 +28,7 @@ export default function TextInput({
         aria-describedby={`${name}-label`}
         autoFocus
         autoComplete="off"
-        value={value ? value : ""}
+        value={value ?? ""}
         onChange={(e) => onChange(e)}
         required
         id={name}
