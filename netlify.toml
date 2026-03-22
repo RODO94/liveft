@@ -1,9 +1,6 @@
-[build.environment]
-  NPM_FLAGS = "--version" # Prevent Netlify from auto-installing with npm
-
 [build]
   command = "pnpm --filter client build"
-  publish = "./client/dist"
+  publish = "client/dist"
 
 # SPA fallback — serve index.html for all client routes
 [[redirects]]
